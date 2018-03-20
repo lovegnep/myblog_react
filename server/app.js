@@ -26,7 +26,11 @@ app.use(busboy({
     }
 }));
 app.use('/',function (req,res,next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    console.log('sone come.....');
+    res.header("Access-Control-Allow-Origin", "http://39.108.56.116:3001");
+    res.header('Access-Control-Allow-Credentials','true');
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
    if(req.signedCookies[config.auth_cookie_name] && req.signedCookies[config.auth_cookie_name] === config.auth_cookie_val) {
        req.session.user='admin';
        res.locals.user='admin';

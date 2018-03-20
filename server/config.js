@@ -27,7 +27,7 @@ var config = {
     auth_cookie_val:'peng',
 
     // 程序运行的端口
-    port: 80,
+    port: 3000,
     upload: {
         path: path.join(__dirname, 'public/upload/'),
         url: '/upload/'

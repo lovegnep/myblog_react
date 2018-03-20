@@ -7,7 +7,7 @@ let Reply      = models.Reply;
 let statics = require('../statistics');
 let dataopt = require('../dataWrapper/dataopt');
 
-router.get('count', function(req, res, next){//请求访问次数
+router.get('/count', function(req, res, next){//请求访问次数
     let client = dataopt.redisClient;
     client.get('viewCount', function(err, data){
         if(err){
@@ -18,7 +18,8 @@ router.get('count', function(req, res, next){//请求访问次数
     });
 });
 
-router.post('getTypeList', function(req, res, next){//请求主题类别
+router.post('/getTypeList', function(req, res, next){//请求主题类别
+    console.log('getTypeList');
     let client = dataopt.redisClient;
     client.smembers('types', function(err, data){
        if(err){
@@ -29,7 +30,8 @@ router.post('getTypeList', function(req, res, next){//请求主题类别
     });
 });
 
-router.post('getThemeList', function(req, res, next){
+router.post('/getThemeList', function(req, res, next){
+    console.log('getThemeList');
     let tab = req.body.tab || 'all';
     let page = req.body.page || 1;
     let options = { skip: (page - 1) * limit, limit: limit, sort: '-update_at'};
@@ -49,7 +51,7 @@ router.post('getThemeList', function(req, res, next){
     });
 });
 
-router.get('themeCount', function(req, res, next){
+router.get('/themeCount', function(req, res, next){
     Theme.count({secret:false},function (err,count) {
         if(err){
             console.log("err");
@@ -59,7 +61,7 @@ router.get('themeCount', function(req, res, next){
     });
 });
 
-router.get('viewMost', function(req, res, next){
+router.get('/viewMost', function(req, res, next){
     //查询前3个浏览最多的主题
     Theme.find({deleted:false,secret:false},{},{limit:3,sort:'-visit_count'},function (err,themes){
         if(err){
@@ -70,7 +72,7 @@ router.get('viewMost', function(req, res, next){
     });
 });
 
-router.get('commentMost', function(req, res, next){
+router.get('/commentMost', function(req, res, next){
     Theme.find({deleted:false,secret:false},{},{limit:3,sort:'-reply_count'},function (err,themes) {
         if(err){
             console.log("err");
