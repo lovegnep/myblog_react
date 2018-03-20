@@ -4,8 +4,6 @@ const config = require('../config');
 let models     = require('../model');
 let Theme      = models.Theme;
 let Reply      = models.Reply;
-let store        = require('../common/store');
-let canvas = require('../canvas-img/validate');
 let statics = require('../statistics');
 let dataopt = require('../dataWrapper/dataopt');
 
