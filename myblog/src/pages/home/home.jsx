@@ -20,15 +20,15 @@ class Home extends Component{
   }
   clickType = async e => {
     let result = await API.getThemeList({type: e.target.name});
-    this.setState({themeList:result.themeList,curType: e.target.name});
+    this.setState({themeList:result.data,curType: e.target.name});
   }
   getThemeList = async () => {
     let result = await API.getThemeList({type: this.state.curType});
-    this.setState({themeList:result.themeList});
+    this.setState({themeList:result.data});
   }
   getTypes = async ()=>{
     let result = await API.getTypeList();
-    this.setState({type: result.typeList});
+    this.setState({type: result.data});
   }
 
   componentWillMount(){
