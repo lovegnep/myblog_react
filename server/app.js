@@ -26,6 +26,7 @@ app.use(busboy({
     }
 }));
 app.use('/',function (req,res,next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
    if(req.signedCookies[config.auth_cookie_name] && req.signedCookies[config.auth_cookie_name] === config.auth_cookie_val) {
        req.session.user='admin';
        res.locals.user='admin';
