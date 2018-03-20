@@ -34,6 +34,7 @@ router.post('/getThemeList', function(req, res, next){
     console.log('getThemeList');
     let tab = req.body.tab || 'all';
     let page = req.body.page || 1;
+    let limit = config.list_topic_count;
     let options = { skip: (page - 1) * limit, limit: limit, sort: '-update_at'};
     let query = {
         tab: tab,
