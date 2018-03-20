@@ -26,7 +26,18 @@ router.post('/getTypeList', function(req, res, next){//请求主题类别
            console.log('getTypeList:', err);
            return next(err);
        }
-        res.send({data:data, status:1});
+       if(!data || data.length < 1){
+           client.sadd('types', 'all', function(err, data){
+              if(err){
+                  console.log('getTypeList: add all to types failed.');
+              }
+              console.log('getTypeList: add all to types success.');
+           });
+           res.send({data:['all'], status:1});
+       }else{
+           res.send({data:data, status:1});
+       }
+
     });
 });
 
