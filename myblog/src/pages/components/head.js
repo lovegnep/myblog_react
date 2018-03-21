@@ -18,7 +18,7 @@ export class Head extends Component{
       <div>
         <p>好像吃肉</p>
         <p>
-          <span>首页</span><span>关于</span><span>联系</span><span>搜索</span>
+          <span><Link to='/'>首页</Link></span><span>关于</span><span>联系</span><span>搜索</span>
           {login}
         </p>
       </div> 

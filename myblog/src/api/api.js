@@ -174,6 +174,26 @@ class API extends Server{
     }
 
   }
+
+  async getTheme(params = {}){
+    try{
+      let result = await this.axios('get', 'http://39.108.56.116:3000/theme/'+params._id, params);
+      if(result && result.status === 1){
+        return result;
+      }else{
+        let err = {
+          tip: '抓取theme失败',
+          response: result,
+          data: params,
+          url: 'http://39.108.56.116:3000/theme/'+params._id,
+        }
+        throw err;
+      }
+    }catch(err){
+      throw err;
+    }
+
+  }
 }
 
 export default new API();

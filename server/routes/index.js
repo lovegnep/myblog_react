@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../config');
+const Async = require('async');
 let models     = require('../model');
 let Theme      = models.Theme;
 let Reply      = models.Reply;
@@ -126,7 +127,6 @@ router.post('/login',function(req, res, next){
   var name = req.body.name;
   var pass = req.body.pass;
   var code = req.body.code;
-console.log(name,pass,code);
 function gen_session(res) {
     var opts = {
         path: '/',
@@ -135,11 +135,6 @@ function gen_session(res) {
         httpOnly: true
     };
     res.cookie(config.auth_cookie_name, config.auth_cookie_val, opts); //cookie 有效期30天
-}
-if(!req.session.code){
-console.log('会话不存在');
-}else{
-console.log('code=',req.session.code);
 }
   if(!req.session.code || req.session.code !== code){
       //var imgdata = canvas.create();
@@ -154,6 +149,49 @@ console.log('code=',req.session.code);
   }else{
     res.send({status:0,err:'帐号或者密码不正确'});
   }
+});
+
+router.get('/theme/:id', function(req, res, next){
+    let _id = req.params.id;
+    console.log('id: ', _id);
+    Async.parallel([
+      function(cb){
+        Theme.findOne({_id:_id},{},{},function (err,theme) {
+        if(err){
+          console.log('err');
+          return cb(err);
+        }
+        if(theme){
+          if(theme.deleted){
+              return cb('该主题已被删除');
+          }else{
+            theme.visit_count += 1;
+            theme.save();
+            return cb(null, theme);
+          }
+        }else{
+           return cb('没有此主题');
+        }
+    });
+      },
+      function(cb){
+        Reply.find({theme_id:_id},function (err,reply) {
+       if(err){
+           console.log('error');
+           return cb(err);
+       }
+       reply = reply||[];
+       return cb(null, reply);
+
+    });
+      }
+    ],function(err, results){
+      if(err){
+        res.send({data:null, status:0});
+      }else{
+        res.send({data: results, status:1});
+       }
+    }); 
 });
 
 module.exports = router;
