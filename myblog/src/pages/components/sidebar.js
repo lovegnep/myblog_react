@@ -50,7 +50,7 @@ export class Sidebar extends Component{
             this.state.viewList.length ? <ul>
                 {
                   this.state.viewList.map((item, index) => {
-                    return <li key={index}><Link to={"theme/"+item._id}>{item.title}</Link></li>
+                    return <li key={index}><Link to={"/theme/"+item._id}>{item.title}</Link></li>
                   })
                 }
               </ul>:''
@@ -63,7 +63,7 @@ export class Sidebar extends Component{
             this.state.commentList.length ? <ul>
                 {
                   this.state.commentList.map((item, index) => {
-                    return <li key={index}><Link to={"theme/"+item._id}>{item.title}</Link></li>
+                    return <li key={index}><Link to={"/theme/"+item._id}>{item.title}</Link></li>
                   })
                 }
               </ul>:''

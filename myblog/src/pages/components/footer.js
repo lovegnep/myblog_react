@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Api from '../../api/api';
+import './footer.css';
 export class Footer extends Component{
   constructor(props){
     super(props);
@@ -19,7 +20,7 @@ export class Footer extends Component{
   }
   render(){
     return (
-      <div>
+      <div className="footer">
         <p>访问量{this.state.viewCount} 沪ICP备17047617号</p>
       </div> 
   
