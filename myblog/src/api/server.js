@@ -19,19 +19,19 @@ export default class Server {
     return new Promise((resolve, reject) => {
       if(typeof params !== 'object') params = {};
       let _option = params;
+      let data = params;
       _option = {
         method,
         url,
         baseURL: '39.108.56.116:3000',
         timeout: 30000,
         params: null,
-        data: null,
+        data,
         headers: null,
         withCredentials: true, //是否携带cookies发起请求
         validateStatus:(status)=>{
             return status >= 200 && status < 300;
         },
-        ...params,
       }
       axios.request(_option).then(res => {
         resolve(typeof res.data === 'object' ? res.data : JSON.parse(res.data))

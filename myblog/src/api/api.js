@@ -135,6 +135,45 @@ class API extends Server{
 
   }
 
+  async getValidImg(params = {}){
+    try{
+      let result = await this.axios('post', 'http://39.108.56.116:3000/loginImg', params);
+      if(result && result.status === 1){
+        return result;
+      }else{
+        let err = {
+          tip: '获取验证码Src失败',
+          response: result,
+          data: params,
+          url: 'http://39.108.56.116:3000/loginImg',
+        }
+        throw err;
+      }
+    }catch(err){
+      throw err;
+    }
+
+  }
+  async login(params = {}){
+    try{
+      console.log('参数：', params);
+      let result = await this.axios('post', 'http://39.108.56.116:3000/login', params);
+      if(result && result.status === 1){
+        return result;
+      }else{
+        let err = {
+          tip: '登陆失败',
+          response: result,
+          data: params,
+          url: 'http://39.108.56.116:3000/login',
+        }
+        throw err;
+      }
+    }catch(err){
+      throw err;
+    }
+
+  }
 }
 
 export default new API();

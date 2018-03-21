@@ -3,8 +3,7 @@
  */
 
 var MdCode = module.exports;
-var Canvas = require('canvas');
-
+const { createCanvas, loadImage } = require('canvas')
 
 function randomNum(min,max){
     return Math.floor(Math.random()*(max-min)+min);
@@ -24,7 +23,7 @@ var getRandom = function(start,end){
 MdCode.create = function() {
     var width = 120;
     var height = 35;
-    var canvas = new Canvas(width, height);
+    var canvas = createCanvas(width, height);
     var ctx = canvas.getContext('2d');
     // ctx.textBaseline = 'bottom';
     //** 绘制背景色 **//

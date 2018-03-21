@@ -6,7 +6,7 @@ let Theme      = models.Theme;
 let Reply      = models.Reply;
 let statics = require('../statistics');
 let dataopt = require('../dataWrapper/dataopt');
-
+let canvas = require('../canvas-img/validate');
 router.get('/count', function(req, res, next){//请求访问次数
     let client = dataopt.redisClient;
     client.get('viewCount', function(err, data){
@@ -113,6 +113,47 @@ router.get('/iconSrc', function(req, res, next){
         }
 
     });
+});
+
+router.post('/loginImg', function(req, res, next){
+    var imgdata = canvas.create();
+    req.session.code = imgdata.code;
+    res.send({data:imgdata.data, status: 1});
+    
+});
+
+router.post('/login',function(req, res, next){
+  var name = req.body.name;
+  var pass = req.body.pass;
+  var code = req.body.code;
+console.log(name,pass,code);
+function gen_session(res) {
+    var opts = {
+        path: '/',
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+        signed: true,
+        httpOnly: true
+    };
+    res.cookie(config.auth_cookie_name, config.auth_cookie_val, opts); //cookie 有效期30天
+}
+if(!req.session.code){
+console.log('会话不存在');
+}else{
+console.log('code=',req.session.code);
+}
+  if(!req.session.code || req.session.code !== code){
+      //var imgdata = canvas.create();
+      //req.session.code = imgdata.code;
+    res.send({status:0,err:'验证码不正确'}) ;
+    return;
+  }
+  if(name === config.la && pass === config.lb){
+      gen_session(res);
+
+    res.send({status:1,err:''});
+  }else{
+    res.send({status:0,err:'帐号或者密码不正确'});
+  }
 });
 
 module.exports = router;
