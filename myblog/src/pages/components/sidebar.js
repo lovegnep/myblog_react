@@ -1,31 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { is, fromJS } from 'immutable';
-import PropTypes from 'prop-types';
-import {baseConfig} from '../../config';
-export class Footer extends Component{
-  static propTypes = {
-    count: PropTypes.number.isRequired,
-    commentList: PropTypes.array.isRequired,
-    viewList: PropTypes.array.isRequired,
-    imgSrc:PropTypes.string.isRequired
+import {config} from '../../config';
+import Api from '../../api/api';
+export class Sidebar extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      themeCount: 0,
+      commentList: [],
+      viewList: [],
+      imgSrc: ''
+    };
   }
-  componentDidMount(){
-    if(!this.props.count){
-      $.get(baseConfig.url+'count', function(result){
-        this.props.count = result;
-      });
-      $.get(baseConfig.url+'commentList', function(result){
-        this.props.commentList = result;
-      });
-      $.get(baseConfig.url+'viewList', function(result){
-        this.props.viewList = result;
-      });
-      $.get(baseConfig.url+'imgSrc', function(result){
-        this.props.imgSrc = result;
-      });
-
-    }
+  async initGetData(){
+    let promises = [Api.getThemeCount(), Api.getCommentMost(), Api.getViewMost(), Api.getIconSrc()];
+    let result = await Promise.all(promises);
+    this.setState({
+      themeCount: result[0].data,
+      commentList: result[1].data,
+      viewList: result[2].data,
+      imgSrc: result[3].data
+    });
+  }
+  componentWillMount(){
+    this.initGetData();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -33,25 +32,25 @@ export class Footer extends Component{
   }
 
   render(){
+    let img = null;
+    if(this.state.imgSrc){
+      img = <img src={config.url+this.state.imgSrc}  alt='头像' />;
+    }
     return (
       <div>
         <div>
           <p>作者简介</p>
-          {
-            if(this.props.imgSrc){
-              <img src={baseConfig.url+this.props.imgSrc} />
-            }
-          }
-          <p>文章数量{this.props.count}</p>
+          {img }
+          <p>文章数量{this.state.count}</p>
         </div>
 
         <div>
           <p>浏览最多的主题</p>
           {
-            this.props.viewList.length ? <ul>
+            this.state.viewList.length ? <ul>
                 {
-                  this.props.viewList.map((item, index) => {
-                    return <li key={index}><Link to={"theme/"+item.id}></Link></li>
+                  this.state.viewList.map((item, index) => {
+                    return <li key={index}><Link to={"theme/"+item._id}>{item.title}</Link></li>
                   })
                 }
               </ul>:''
@@ -61,10 +60,10 @@ export class Footer extends Component{
         <div>
           <p>评论最多的主题</p>
           {
-            this.props.commentList.length ? <ul>
+            this.state.commentList.length ? <ul>
                 {
-                  this.props.commentList.map((item, index) => {
-                    return <li key={index}><Link to={"theme/"+item.id}></Link></li>
+                  this.state.commentList.map((item, index) => {
+                    return <li key={index}><Link to={"theme/"+item._id}>{item.title}</Link></li>
                   })
                 }
               </ul>:''

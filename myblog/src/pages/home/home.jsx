@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { is, fromJS } from 'immutable';
-import PropTypes from 'prop-types';
-import {baseConfig} from '../../config';
 import API from '../../api/api';
+import {Sidebar} from '../components/sidebar';
+import {Head} from '../components/head';
+import {Footer} from '../components/footer';
+
 class Home extends Component{
   constructor(props){
     super(props);
     this.state = {
       themeList: [],
-      type: {},
+      type: [],
       curType: 'all'
     };
   }
   handleClickType(e){
-    if(this.state.curType !== e.target.name){
+    if(this.state.curType !== e.target.innerText){
       this.clickType(e);
     }
   }
   clickType = async e => {
-    let result = await API.getThemeList({type: e.target.name});
-    this.setState({themeList:result.data,curType: e.target.name});
+    let result = await API.getThemeList({type: e.target.innerText});
+    this.setState({themeList:result.data,curType: e.target.innerText});
   }
   getThemeList = async () => {
     let result = await API.getThemeList({type: this.state.curType});
@@ -46,27 +48,29 @@ class Home extends Component{
   }
 
   render(){
-
-    let keys = Object.keys(this.state.type) || [];
+    let self = this;
     return (
       <div>
+        <Head />
+        <Sidebar />
         <div> 
         {
-          keys.map(function(item, index){
-            return <span name={item} key={index} onClick={this.handleClickType.bind(this)}>{this.state.type[item]}</span>
+          this.state.type.map(function(item, index){
+            return <span name={item} key={index} onClick={self.handleClickType.bind(self)}>{item}</span>
           })
         }
         </div>
         <div>
           {
-            this.themeList.map(function(item, index){
+            this.state.themeList.map(function(item, index){
               return <div key={index} >
-                <Link to={'theme/'+item.id}>{item.name}</Link>
-                <span>{item.viewCount} / {item.commentCount}</span>
+                <Link to={'theme/'+item._id}>{item.title}</Link>
+                <span>{item.visit_count} / {item.reply_count}</span>
               </div>
             })
           }
         </div>
+      <Footer />
       </div> 
   
     )

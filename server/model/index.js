@@ -9,7 +9,9 @@ mongoose.connect(config.db, {
     if (err) {
         console.log('connect to %s error: ', config.db, err.message);
         process.exit(1);
-    }
+    }else{
+    console.log('connect to %s success.', config.db);
+}
 });
 require('./theme');
 require('./reply');

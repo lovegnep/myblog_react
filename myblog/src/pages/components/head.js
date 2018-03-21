@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { is, fromJS } from 'immutable';
-import PropTypes from 'prop-types';
 
 export class Head extends Component{
   state = {

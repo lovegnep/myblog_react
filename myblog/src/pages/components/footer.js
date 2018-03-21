@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { is, fromJS } from 'immutable';
-import PropTypes from 'prop-types';
-import {baseConfig} from '../../config';
+import Api from '../../api/api';
 export class Footer extends Component{
-  state = {
-    viewCount: PropTypes.number.isRequired
+  constructor(props){
+    super(props);
+    this.state = {
+      viewCount: 0
+    };
+
   }
-  componentDidMount(){
+  getViewCount = async() => {
+    let result = await Api.getViewCount();
+    this.setState({viewCount: result.data});
+  }
+  componentWillMount(){
     if(!this.state.viewCount){
-      $.get(baseConfig.url+'viewCount', function(result){
-        this.setState({viewCount: result});
-      });
+      this.getViewCount();
     }
   }
   render(){

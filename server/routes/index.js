@@ -18,6 +18,7 @@ router.get('/count', function(req, res, next){//请求访问次数
     });
 });
 
+
 router.post('/getTypeList', function(req, res, next){//请求主题类别
     console.log('getTypeList');
     let client = dataopt.redisClient;
@@ -42,24 +43,28 @@ router.post('/getTypeList', function(req, res, next){//请求主题类别
 });
 
 router.post('/getThemeList', function(req, res, next){
-    console.log('getThemeList');
     let tab = req.body.tab || 'all';
     let page = req.body.page || 1;
     let limit = config.list_topic_count;
     let options = { skip: (page - 1) * limit, limit: limit, sort: '-update_at'};
     let query = {
-        tab: tab,
         deleted: false
     };
+    if(tab && tab !== 'all'){
+        query.tab = tab;
+    }
     if(!req.session.user || req.session.user !== 'admin'){
         query.secret = false;
     }
+    console.log('opt:', query, options);
     Theme.find(query, {}, options, function (err, themes) {
         if(err){
             console.log("err");
             return next(err);
         }
-        res.send({data:themes, status:1});
+       
+        console.log('get data success:', themes);
+        res.send({data:themes || [], status:1});
     });
 });
 
@@ -91,6 +96,22 @@ router.get('/commentMost', function(req, res, next){
             return next(err);
         }
         res.send({data:themes, status: 1});
+    });
+});
+
+router.get('/iconSrc', function(req, res, next){
+    let client = dataopt.redisClient;
+    client.get('iconSrc', function(err, data){
+        console.log('iconSrc:', data);
+        if(err){
+            console.log('iconSrc: ', err);
+            return next(err);
+        }else if(!data){
+            res.send({data:'/img/favicon.ico', status:1}); 
+        }else{
+            res.send({data: data, status:1});
+        }
+
     });
 });
 
