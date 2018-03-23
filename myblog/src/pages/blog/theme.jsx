@@ -7,7 +7,7 @@ import {Head} from '../components/head';
 import {Footer} from '../components/footer';
 import ReactMarkdown from 'react-markdown';
 import PublicHeader from '../components/header/header';
-
+import './theme.scss';
 class Theme extends Component{
   constructor(props){
     super(props);
@@ -52,7 +52,7 @@ class Theme extends Component{
               </div>
 
           </div>
-         <div>
+         <div className="theme">
           <ReactMarkdown source={this.state.theme.content} /> 
          </div>
          <div>

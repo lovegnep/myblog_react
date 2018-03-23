@@ -9,6 +9,14 @@
   .tips{
     @include font(20px);
     padding: 5px;
+    text-align:right;
+    span{
+      padding-right: 10px;
+    }
+  }
+  .theme{
+    @include font(30px, $base-color);
+    padding: 30px;
   }
   .common-tab{
      @include font(36px, $base-color);
