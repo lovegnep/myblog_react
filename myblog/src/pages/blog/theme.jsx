@@ -40,14 +40,17 @@ class Theme extends Component{
     toolbar = <p><span>删除</span><span>编辑</span><span>{this.state.theme.secret ? '取消隐藏' : '隐藏'}</span></p>;
     }
     return (
-      <div>
+      <div className="home-container">
        <PublicHeader title='文章' />
         <div>
           <div>
-              <p>{this.state.theme.title}</p>
-              {toolbar} 
-              <span>创建时间{createat}</span><span>更新时间{updateat}</span>
-<span>浏览次数{this.state.theme.visit_count}</span><span>回复次数{this.state.theme.reply_count}</span>
+              <p className="title">{this.state.theme.title}</p>
+              {toolbar}
+              <div className="tips">
+                  <span>创建时间{createat}</span><span>更新时间{updateat}</span>
+                  <span>浏览次数{this.state.theme.visit_count}</span><span>回复次数{this.state.theme.reply_count}</span>
+              </div>
+
           </div>
          <div>
           <ReactMarkdown source={this.state.theme.content} /> 
