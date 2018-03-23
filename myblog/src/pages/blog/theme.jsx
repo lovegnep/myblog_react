@@ -5,6 +5,8 @@ import API from '../../api/api';
 import {Sidebar} from '../components/sidebar';
 import {Head} from '../components/head';
 import {Footer} from '../components/footer';
+import ReactMarkdown from 'react-markdown';
+import PublicHeader from '../components/header/header';
 
 class Theme extends Component{
   constructor(props){
@@ -39,8 +41,7 @@ class Theme extends Component{
     }
     return (
       <div>
-        <Head />
-        <Sidebar />
+       <PublicHeader title='文章' />
         <div>
           <div>
               <p>{this.state.theme.title}</p>
@@ -49,10 +50,9 @@ class Theme extends Component{
 <span>浏览次数{this.state.theme.visit_count}</span><span>回复次数{this.state.theme.reply_count}</span>
           </div>
          <div>
-         <p>{this.state.theme.content}</p>
+          <ReactMarkdown source={this.state.theme.content} /> 
          </div>
          <div>
- 
          </div>
           {
             this.state.reply.map(function(item, index){

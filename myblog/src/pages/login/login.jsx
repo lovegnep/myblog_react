@@ -5,6 +5,7 @@ import API from '../../api/api';
 import {Sidebar} from '../components/sidebar';
 import {Head} from '../components/head';
 import {Footer} from '../components/footer';
+import PublicHeader from '../components/header/header';
 
 class Login extends Component{
   constructor(props){
@@ -75,8 +76,7 @@ class Login extends Component{
     let self = this;
     return (
       <div>
-        <Head />
-        <Sidebar />
+        <PublicHeader title="登陆" />
         <div> 
                     <div>
             <span>用户名：</span>

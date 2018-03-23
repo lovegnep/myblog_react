@@ -1,0 +1,108 @@
+@import "../style/mixin.scss";
+
+.home-container{
+  padding-top: 88px;
+  .common-tab{
+     @include font(36px, $base-color);
+     padding: 30px;
+  }
+  .themelist{
+    padding:20px;
+    border-bottom: 1PX solid #eee;
+    margin-left: 13px;
+    margin-bottom: 10px;
+    .common-num{
+       @include font(33px, $base-color);
+       padding: 30px;      
+    }
+    .title{
+    font-weight: bold;
+    padding: 0 100px 10px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    line-height: 0.5em;
+    clear: both;
+    border-left: 5px solid #1fa6e6;
+       }
+       .tips{
+    color: #666;
+    font-weight: bold;
+    line-height: 1.5em;
+    font-size: 110%;
+    margin-top: 3px;
+    margin-bottom: -160px;
+    float: right;
+    position: relative;
+    top: 40px;
+       } 
+    .common-themelist{
+       @include font(36px);
+       padding: 10px;
+    }
+ } 
+  .common-title{
+    @include font(36px, $base-color);
+    padding: 30px;
+  }
+  .home-form{
+    background-color: #fff;
+    .home-form-tiem{
+      height: 120px;
+      border-bottom: 1PX solid #eee;
+      span{
+        @include font(32px, #555);
+        margin-left: 30px;
+        margin-right: 20px;
+      }
+      input{
+        border: none;
+        font-size: 30px;
+      }
+      ::-webkit-input-placeholder{ 
+        color: #ccc; 
+      }
+    }
+  }
+  .common-select-btn{
+    background-color: #fff;
+    display: block;
+    min-height: 120px;
+    @include font(42px, #ccc, center);
+    @include flex;
+    .selected-pro-list{
+      @include flex;
+      flex-wrap: wrap;
+      .selected-pro-item{
+        width: 340px;
+        margin: 10px;
+        line-height: 50px;
+        @include font(32px, $text-align:center);
+      }
+    }
+  }
+  .upload-img-con{
+    text-align: center;
+    .file-lable{
+      position: relative;
+      input[type='file']{
+        position: absolute;
+        @include wh(100%, 100%);
+        background-color: red;
+        top: 0;
+        right: 0;
+        opacity: 0;
+      }
+    }
+    .select-img{
+      margin-top: 10px;
+    }
+  }
+
+  .submit-btn{
+    width: 90%;
+    background-color: $base-color;
+    margin: 50px auto 0;
+    border-radius: 10px;
+    line-height: 100px;
+    @include font(40px, #fff, center);
+  }
+}

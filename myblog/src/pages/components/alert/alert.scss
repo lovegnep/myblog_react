@@ -1,0 +1,41 @@
+@import "../../style/mixin.scss";
+
+.alert-con{
+  @include coverScreen(fixed, rgba(0, 0, 0, 0.3));
+  z-index: 11;
+}
+.alert-context{
+  @include positionCenter;
+  z-index: 12;
+  @include wh(600px, 360px);
+  background-color: #fff;
+  border-radius: 16px;
+  @include flex($align-items: stretch);
+  flex-direction: column;
+  .alert-content-detail{
+    flex: 5;
+    @include flex;
+    @include font(40px);
+  }
+  .confirm-btn{
+    flex: 2;
+    @include flex;
+    @include font(40px);
+    border-top: 1PX solid #eee;
+  }
+}
+.alert-enter{
+  opacity: 0;
+}
+.alert-enter.alert-enter-active{
+  transition: all 300ms;
+  opacity: 1;
+}
+
+.alert-leave{
+  opacity: 1;
+}
+.alert-leave.alert-leave-active{
+  transition: all 300ms;
+  opacity: 0;
+}

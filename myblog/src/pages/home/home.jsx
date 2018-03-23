@@ -5,6 +5,10 @@ import API from '../../api/api';
 import {Sidebar} from '../components/sidebar';
 import {Head} from '../components/head';
 import {Footer} from '../components/footer';
+import PublicHeader from '../components/header/header';
+import mixin, { padStr } from '../utils/mixin';
+import LinesEllipsis from 'react-lines-ellipsis';
+import './home.scss';
 
 class Home extends Component{
   constructor(props){
@@ -50,28 +54,33 @@ class Home extends Component{
   render(){
     let self = this;
     return (
-      <div>
-        <Head />
-        <Sidebar />
+      <main className="home-container">
+        <PublicHeader title="首页" />
         <div> 
         {
           this.state.type.map(function(item, index){
-            return <span name={item} key={index} onClick={self.handleClickType.bind(self)}>{item}</span>
+            return <span className="common-tab" name={item} key={index} onClick={self.handleClickType.bind(self)}>{item}</span>
           })
         }
         </div>
         <div>
           {
             this.state.themeList.map(function(item, index){
-              return <div key={index} >
-                <Link to={'theme/'+item._id}>{item.title}</Link>
-                <span>{item.visit_count} / {item.reply_count}</span>
+              return <div className="themelist" key={index} >
+                <div className="tips">
+                 <a className="common-num">阅读：{item.visit_count}   评论：{item.reply_count}</a> 
+                </div>
+                <div className="title">         
+                <Link className="common-themelist" to={'theme/'+item._id}>
+                 <LinesEllipsis text={item.title} maxLine='1' ellipsis='...' trimRight basedOn='letters' />
+                </Link>
+                </div> 
               </div>
             })
           }
         </div>
       <Footer />
-      </div> 
+      </main> 
   
     )
 
