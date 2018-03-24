@@ -10,7 +10,7 @@ var busboy = require('connect-busboy');
 var bytes = require('bytes');
 var statics = require('./statistics');
 var app = express();
-
+const _ = require('lodash');
 function isOriginAllowed(origin, allowedOrigin) {
     if (_.isArray(allowedOrigin)) {
         for(let i = 0; i < allowedOrigin.length; i++) {
