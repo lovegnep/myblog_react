@@ -40,7 +40,7 @@ class Theme extends Component{
     toolbar = <p><span>删除</span><span>编辑</span><span>{this.state.theme.secret ? '取消隐藏' : '隐藏'}</span></p>;
     }
     return (
-      <div className="home-container">
+      <div className="theme-container">
        <PublicHeader title='文章' />
         <div>
           <div>
@@ -55,17 +55,22 @@ class Theme extends Component{
          <div className="theme">
           <ReactMarkdown source={this.state.theme.content} /> 
          </div>
-         <div>
-         </div>
-          {
-            this.state.reply.map(function(item, index){
-              return <div key={index} >
-                <span>{item.lou}楼</span>
-                <p>{item.content}</p>
-                <p><span>{item.ups}</span><span>创建时间{new Date(item.create_at).toLocaleDateString()}</span></p>
-              </div>
-            })
-          }
+            <div className="comment">
+                <p className="commentHead">文章点评</p>
+              {
+                this.state.reply.map(function(item, index){
+                  return <div className="commentItem" key={index} >
+                    <span className="lou">{item.lou}楼</span><span className="createTime">创建时间{new Date(item.create_at).toLocaleDateString()}</span>
+                    <p className="content">{item.content}</p>
+                          <div className="interaction">
+                              <a><span className="iconfont noup">{item.ups}</span></a>
+                              <a><span className="iconfont nodown"></span></a>
+                              <a><span className="iconfont ans"></span></a>
+                          </div>
+                  </div>
+                })
+              }
+            </div>
         </div>
       <Footer />
       </div> 
