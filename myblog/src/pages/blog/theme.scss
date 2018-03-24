@@ -40,9 +40,10 @@
       .content{
         padding-top:10px;
         padding-bottom:10px;
+        font-size:28px;
       }
       .interaction{
-        @include font(24px);
+        @include font(26px);
         text-align:right;
         span{
           padding-right: 10px;
