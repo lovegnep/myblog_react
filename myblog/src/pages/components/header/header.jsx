@@ -9,6 +9,7 @@ class PublicHeader extends Component{
   static propTypes = {
     record: PropTypes.any,
     title: PropTypes.string.isRequired,
+    //loginStatus: PropTypes.bool.isRequired,
     confirm: PropTypes.any,
   }
 
@@ -30,6 +31,8 @@ class PublicHeader extends Component{
   }
 
   render(){
+    let tar = this.props.loginStatus ? '/loginout' : '/login';
+    let rat = this.props.loginStatus ? '登出' : '登陆';
     return(
       <header className="header-container">
         <span className="header-slide-icon icon-catalog" onClick={this.toggleNav}></span>
@@ -48,7 +51,9 @@ class PublicHeader extends Component{
             {
               this.state.navState && <aside key='nav-slide' className="nav-slide-list" onClick={this.toggleNav}>
                 <NavLink to="/" exact className="nav-link icon-jiantou-copy-copy">首页</NavLink>
-                <NavLink to="/login" exact className="nav-link icon-jiantou-copy-copy">登陆</NavLink>
+                <NavLink to={tar} exact className="nav-link icon-jiantou-copy-copy">
+                    { rat }
+                </NavLink>
                 <NavLink to="/search" exact className="nav-link icon-jiantou-copy-copy">搜索</NavLink>
               </aside>
             }

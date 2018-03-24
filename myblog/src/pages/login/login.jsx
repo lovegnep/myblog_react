@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import {is, fromJS} from 'immutable';
 import API from '../../api/api';
 import {Sidebar} from '../components/sidebar';
@@ -10,6 +9,7 @@ import './login.scss';
 
 class Login extends Component {
     constructor(props) {
+        console.log(props);
         super(props);
         this.state = {
             name: '',
@@ -34,7 +34,13 @@ class Login extends Component {
 
     login = async params => {
         let res = await API.login(params);
-        alert('登陆成功');
+        //alert('登陆成功');
+        this.props.history.push({
+            pathname:'/',
+            state:{
+                loginStatus:true
+            },
+        });
     }
     submit = () => {
         let name = this.state.name;

@@ -18,6 +18,13 @@ class Home extends Component{
       type: [],
       curType: 'all'
     };
+    let state = this.props.location.state;
+    if(state && state.loginStatus){
+      this.loginStatus = true;
+    }else{
+      this.loginStatus = false;
+    }
+    console.log('loginStatus:',this.loginStatus);
   }
   handleClickType(e){
     if(this.state.curType !== e.target.innerText){
@@ -55,7 +62,7 @@ class Home extends Component{
     let self = this;
     return (
       <main className="home-container">
-        <PublicHeader title="首页" />
+        <PublicHeader title="首页" loginStatus={this.loginStatus} />
         <div> 
         {
           this.state.type.map(function(item, index){
