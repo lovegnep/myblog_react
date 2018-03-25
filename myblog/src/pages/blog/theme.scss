@@ -22,12 +22,12 @@
       max-width:100%;
     }
   }
+  .commentHead{
+    padding: 10px;
+    background-image: linear-gradient(to right, #e9e9f1, #babad1);
+  }
   .comment{
     @include font(36px);
-    .commentHead{
-      padding: 10px;
-      background-image: linear-gradient(to right, #e9e9f1, #babad1);
-    }
     .commentItem{
       padding:10px;
       @include font(30px);
@@ -53,6 +53,29 @@
           padding-right: 10px;
         }
       }
+    }
+  }
+  .ansHead{
+    @include font(36px);
+    padding: 10px;
+    background-image: linear-gradient(to right, #e9e9f1, #babad1);
+  }
+  .edit_draft {
+    button {
+      //height: 30px;
+    }
+    .my-editing-area{
+      height:200px;
+    }
+  }
+  .answer{
+    .pos{
+      position: fixed;
+      left: auto;
+      right: 0;
+      top: 50%;
+      z-index: 100;
+      font-size: 60px;
     }
   }
 }

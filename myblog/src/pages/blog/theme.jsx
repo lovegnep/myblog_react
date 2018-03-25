@@ -35,7 +35,7 @@ class Theme extends Component {
         this.state = {
             theme: {},
             reply: [],
-            ans:'呵呵'
+            ans: '呵呵'
         };
     }
 
@@ -52,8 +52,8 @@ class Theme extends Component {
         return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
     }
 
-    handleAnsChange(value){
-        this.setState({ans:value});
+    handleAnsChange(value) {
+        //this.setState({ans: value});
     }
 
     render() {
@@ -64,6 +64,22 @@ class Theme extends Component {
         if (this.loginStatus) {
             toolbar = <p><span>删除</span><span>编辑</span><span>{this.state.theme.secret ? '取消隐藏' : '隐藏'}</span></p>;
         }
+        let modules = {
+            toolbar: [
+                [{'header': [1, 2, false]}],
+                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+                ['link', 'image'],
+                ['clean']
+            ],
+        };
+
+        let formats = [
+            'header',
+            'bold', 'italic', 'underline', 'strike', 'blockquote',
+            'list', 'bullet', 'indent',
+            'link', 'image'
+        ];
         return (
             <div className="theme-container">
                 <PublicHeader title='文章'/>
@@ -97,9 +113,17 @@ class Theme extends Component {
                             })
                         }
                     </div>
+                    <div>
+                        <p className="ansHead">添加回复</p>
+                    </div>
                     <div className="edit_draft">
-                        <ReactQuill value={this.state.ans}
-                                    onChange={this.handleAnsChange.bind(this)} />
+                        <ReactQuill value={this.state.ans} modules={modules} formats={formats}
+                                    onChange={this.handleAnsChange.bind(this)}>
+                            <div className="my-editing-area"/>
+                        </ReactQuill>
+                    </div>
+                    <div className="answer">
+                        <span className="iconfont commentans pos"></span>
                     </div>
                 </div>
                 <Footer/>
@@ -110,6 +134,7 @@ class Theme extends Component {
     }
 
 }
+
 /*
 <EditReactMD initialContent={this.state.ans} iconsSet="font-awesome" onContentChange={this.handleAnsChange.bind(this)} />
 */
