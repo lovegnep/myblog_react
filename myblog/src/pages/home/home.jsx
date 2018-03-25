@@ -13,18 +13,24 @@ import './home.scss';
 class Home extends Component{
   constructor(props){
     super(props);
-    this.state = {
-      themeList: [],
-      type: [],
-      curType: 'all'
-    };
+
     let state = this.props.location.state;
+    let tmp = false;
     if(state && state.loginStatus){
-      this.loginStatus = true;
+      tmp = true;
     }else{
-      this.loginStatus = false;
+      tmp = false;
     }
-    console.log('loginStatus:',this.loginStatus);
+    this.state = {
+        themeList: [],
+        type: [],
+        curType: 'all',
+        loginStatus:tmp
+    };
+  }
+  handleLoginOut(){
+    this.initData();
+    this.setState({loginStatus:false});
   }
   handleClickType(e){
     if(this.state.curType !== e.target.innerText){
@@ -43,17 +49,18 @@ class Home extends Component{
     let result = await API.getTypeList();
     this.setState({type: result.data});
   }
-
-  componentWillMount(){
-    let keys = Object.keys(this.state.type) || [];
-    if(keys.length < 1){
+  initData(){
       this.getTypes();
-    }
-    if(this.state.themeList.length < 1){
       this.getThemeList();
-    }
+      this.getLoginStatus();
   }
-
+  componentWillMount(){
+    this.initData();
+  }
+  getLoginStatus = async()=>{
+      let result = await API.getLoginStatus();
+      this.setState({loginStatus:result.data});
+  }
   shouldComponentUpdate(nextProps, nextState) {
     return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
   }
@@ -62,7 +69,7 @@ class Home extends Component{
     let self = this;
     return (
       <main className="home-container">
-        <PublicHeader title="首页" loginStatus={this.loginStatus} />
+        <PublicHeader title="首页" loginStatus={this.state.loginStatus} cb={this.handleLoginOut.bind(this)} />
         <div> 
         {
           this.state.type.map(function(item, index){

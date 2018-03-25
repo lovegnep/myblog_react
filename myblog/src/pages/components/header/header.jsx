@@ -33,12 +33,7 @@ class PublicHeader extends Component {
     }
     loginout = async()=>{
         let result = await API.loginout();
-        this.props.history.push({
-            pathname:'/',
-            state:{
-                loginStatus:false
-            },
-        });
+        this.props.cb();
     }
     render() {
         let tar = this.props.loginStatus ? '/loginout' : '/login';
@@ -50,7 +45,7 @@ class PublicHeader extends Component {
                 { rat }
             </NavLink>
         }else{
-            tt = <a onClick={this.loginout.bind(self)}>登出</a>
+            tt = <a className="nav-link icon-jiantou-copy-copy" onClick={this.loginout.bind(self)}>登出</a>
         }
         return (
             <header className="header-container">
@@ -71,9 +66,7 @@ class PublicHeader extends Component {
                         this.state.navState &&
                         <aside key='nav-slide' className="nav-slide-list" onClick={this.toggleNav}>
                             <NavLink to="/" exact className="nav-link icon-jiantou-copy-copy">首页</NavLink>
-                            <NavLink to={tar} exact className="nav-link icon-jiantou-copy-copy">
-                                { rat }
-                            </NavLink>
+                            {tt}
                             <NavLink to="/search" exact className="nav-link icon-jiantou-copy-copy">搜索</NavLink>
                         </aside>
                     }

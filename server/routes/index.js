@@ -155,6 +155,13 @@ router.get('/loginout',function(req,res,next){
     res.clearCookie(config.auth_cookie_name, { path: '/' });
     res.send({status:1,err:''});
 });
+router.get('/loginstatus',function(req,res,next){
+    if(req.session.user && req.session.user === 'admin'){
+        res.send({data:true,status:1});
+    }else{
+        res.send({data:false,status:1});
+    }
+});
 router.get('/theme/:id', function(req, res, next){
     let _id = req.params.id;
     console.log('id: ', _id);

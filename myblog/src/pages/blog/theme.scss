@@ -15,8 +15,12 @@
     }
   }
   .theme{
+    width:100%;
     @include font(30px, $base-color);
     padding: 30px;
+    img{
+      max-width:100%;
+    }
   }
   .comment{
     @include font(36px);

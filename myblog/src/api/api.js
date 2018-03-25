@@ -202,6 +202,27 @@ class API extends Server {
 
     }
 
+    async getLoginStatus(params = {}) {
+        try {
+            console.log('参数：', params);
+            let result = await this.axios('get', 'http://39.108.56.116:3000/loginstatus', params);
+            if (result && result.status === 1) {
+                return result;
+            } else {
+                let err = {
+                    tip: '获取登陆状态失败',
+                    response: result,
+                    data: params,
+                    url: 'http://39.108.56.116:3000/loginstatus',
+                }
+                throw err;
+            }
+        } catch (err) {
+            throw err;
+        }
+
+    }
+
     async getTheme(params = {}) {
         try {
             let result = await this.axios('get', 'http://39.108.56.116:3000/theme/' + params._id, params);
