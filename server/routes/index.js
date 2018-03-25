@@ -150,7 +150,11 @@ function gen_session(res) {
     res.send({status:0,err:'帐号或者密码不正确'});
   }
 });
-
+router.get('/loginout',function(req,res,next){
+    req.session.destroy();
+    res.clearCookie(config.auth_cookie_name, { path: '/' });
+    res.send({status:1,err:''});
+});
 router.get('/theme/:id', function(req, res, next){
     let _id = req.params.id;
     console.log('id: ', _id);
