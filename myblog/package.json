@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "draft-js": "^0.10.5",
     "events": "^2.0.0",
     "immutable": "^3.8.2",
     "node-sass": "^4.7.2",
@@ -12,9 +13,12 @@
     "react-dom": "^16.2.0",
     "react-lines-ellipsis": "^0.10.2",
     "react-markdown": "^3.3.0",
+    "react-markdown-editor": "^0.6.2",
+    "react-quill": "^1.2.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "simditor": "^2.3.6"
   },
   "scripts": {
     "start": "react-scripts start",
