@@ -4,7 +4,6 @@ import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import home from "./pages/home/home";
 import login from './pages/login/login';
 import theme from './pages/blog/theme';
-
 class App extends Component {
 render(){
     return(

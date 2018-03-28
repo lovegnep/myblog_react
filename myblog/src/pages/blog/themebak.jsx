@@ -2,15 +2,14 @@ import React, {Component} from 'react';
 import {is, fromJS} from 'immutable';
 import API from '../../api/api';
 import {Head} from '../components/head';
-import {Footer} from '../components/footer';
 import ReactMarkdown from 'react-markdown';
 //import {Editor, EditorState} from 'draft-js';
 //import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 //import MarkdownEditor from 'react-markdown-editor';
 import PublicHeader from '../components/header/header';
-import './theme.scss';
 import Editor from '../editor/editor';
+import './theme.scss';
 //let MarkdownEditor = require('react-markdown-editor').MarkdownEditor;
 
 /*let TestComponent = React.createClass({
@@ -118,7 +117,10 @@ class Theme extends Component {
                         <p className="ansHead">添加回复</p>
                     </div>
                     <div className="edit_draft">
-                      <Editor />
+                        <ReactQuill value={this.state.ans} modules={modules} formats={formats}
+                                    onChange={this.handleAnsChange.bind(this)}>
+                            <div className="my-editing-area"/>
+                        </ReactQuill>
                     </div>
                     <div className="answer">
                         <span className="iconfont commentans pos"></span>
