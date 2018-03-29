@@ -5,6 +5,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './util/setRem';
 import './util/base.css';
-
+import $ from 'jquery';
+window.jQuery = $;
+window.jquery = $;
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();

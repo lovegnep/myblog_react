@@ -329,6 +329,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+  font-size:16px;
 }
 .editor-toolbar:before, .editor-toolbar:after {
   display: block;

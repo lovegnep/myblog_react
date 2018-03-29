@@ -9,7 +9,7 @@ import PublicHeader from '../components/header/header';
 import mixin, { padStr } from '../utils/mixin';
 import LinesEllipsis from 'react-lines-ellipsis';
 import './home.scss';
-
+import Editor from '../editor/editor';
 class Home extends Component{
   constructor(props){
     super(props);

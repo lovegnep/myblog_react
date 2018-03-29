@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config');
 const Async = require('async');
+var store        = require('../common/store');
 let models     = require('../model');
 let Theme      = models.Theme;
 let Reply      = models.Reply;
@@ -204,5 +205,33 @@ router.get('/theme/:id', function(req, res, next){
        }
     }); 
 });
+router.post('/upload',function (req,res) {
+    var isFileLimit = false;
+    req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+        file.on('limit', function () {
+            isFileLimit = true;
 
+            res.json({
+                success: false,
+                msg: 'File size too large. Max is ' + config.file_limit
+            })
+        });
+
+        store.upload(file, {filename: filename}, function (err, result) {
+            if (err) {
+                return next(err);
+            }
+            if (isFileLimit) {
+                return;
+            }
+            res.json({
+                success: true,
+                url: result.url,
+            });
+        });
+
+    });
+
+    req.pipe(req.busboy);
+});
 module.exports = router;

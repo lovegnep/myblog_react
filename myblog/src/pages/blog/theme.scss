@@ -18,6 +18,12 @@
     width:100%;
     @include font(30px, $base-color);
     padding: 30px;
+    ul li{
+      list-style:square;
+    }
+    ol li{
+      list-style:decimal;
+    }
     img{
       max-width:100%;
     }
