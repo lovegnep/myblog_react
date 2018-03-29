@@ -48,8 +48,11 @@
           vertical-align:middle;
         }
         .imgs{
-          vertical-align:middle;
-          margin-left:84px;
+          position:absolute;
+          right:0;
+          bottom:0;
+          /*vertical-align:middle;*/
+          /*margin-left:84px;*/
         }
       }
     }

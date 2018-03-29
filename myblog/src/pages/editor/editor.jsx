@@ -8,6 +8,7 @@ import bootstrapp from './bootstrap.js';
 import './bootstrap.css';
 import './editor.css';
 import './webuploader.css';
+import './edit.scss';
 class Editor extends Component{
   constructor(props){
     super(props);
@@ -28,8 +29,8 @@ class Editor extends Component{
     return (
       <div className='editor-contain'>
         <textarea></textarea> 
-        <div className='editor_buttons'>
-                            <input type="submit" className='span-primary submit_btn' data-loading-text="提交中"
+        <div className='edit_buttons'>
+                            <input type="submit" className="subbut" data-loading-text="提交中"
                                    value="提交"/>
                         </div> 
       </div>
