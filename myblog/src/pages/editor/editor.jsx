@@ -13,6 +13,7 @@ class Editor extends Component{
   constructor(props){
     super(props);
     this.submit = props.cb;
+    this.content = props.content;
     this.editorobj = null;
   }
   
@@ -39,7 +40,7 @@ class Editor extends Component{
     let self = this;
     return (
       <div className='editor-contain'>
-        <textarea></textarea> 
+        <textarea>{this.content}</textarea>
         <div className='edit_buttons'>
            <span className="iconfont icon-send editbut" onClick={self.handleSubmit.bind(self)}></span>
         </div> 

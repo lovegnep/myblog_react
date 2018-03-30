@@ -61,9 +61,10 @@ class Theme extends Component {
     }
     editTheme(){
         this.props.history.push({
-            pathname:'/theme/edit',
+            pathname:'/edittheme',
             state:{
-                theme:this.state.theme
+                theme:this.state.theme,
+                loginStatus:this.loginStatus
             }
         });
     }
