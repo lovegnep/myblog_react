@@ -20,7 +20,18 @@ router.get('/count', function(req, res, next){//请求访问次数
     });
 });
 
+router.post('/addnewtype', function(req, res, next){//新增主题类别
+    let newtype = req.body.tab;
+    let client = dataopt.redisClient;
+    client.sadd('types', newtype, function(err, data){
+       if(err){
+           console.log('addnewtype:', err);
+           return next(err);
+       }
+       res.send({status:1});
 
+    });
+});
 router.post('/getTypeList', function(req, res, next){//请求主题类别
     console.log('getTypeList');
     let client = dataopt.redisClient;
@@ -30,13 +41,13 @@ router.post('/getTypeList', function(req, res, next){//请求主题类别
            return next(err);
        }
        if(!data || data.length < 1){
-           client.sadd('types', 'all', function(err, data){
+           /*client.sadd('types', 'all', function(err, data){
               if(err){
                   console.log('getTypeList: add all to types failed.');
               }
               console.log('getTypeList: add all to types success.');
-           });
-           res.send({data:['all'], status:1});
+           });*/
+           res.send({data:['全部'], status:1});
        }else{
            res.send({data:data, status:1});
        }
@@ -45,14 +56,14 @@ router.post('/getTypeList', function(req, res, next){//请求主题类别
 });
 
 router.post('/getThemeList', function(req, res, next){
-    let tab = req.body.tab || 'all';
+    let tab = req.body.tab || '全部';
     let page = req.body.page || 1;
     let limit = config.list_topic_count;
     let options = { skip: (page - 1) * limit, limit: limit, sort: '-update_at'};
     let query = {
         deleted: false
     };
-    if(tab && tab !== 'all'){
+    if(tab && tab !== '全部'){
         query.tab = tab;
     }
     if(!req.session.user || req.session.user !== 'admin'){
@@ -205,7 +216,7 @@ router.get('/theme/:id', function(req, res, next){
        }
     }); 
 });
-router.post('/upload',function (req,res) {
+router.post('/upload',function (req,res) {//上传图片
     var isFileLimit = false;
     req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
         file.on('limit', function () {

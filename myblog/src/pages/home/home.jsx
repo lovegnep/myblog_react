@@ -24,7 +24,7 @@ class Home extends Component{
     this.state = {
         themeList: [],
         type: [],
-        curType: 'all',
+        curType: '全部',
         loginStatus:tmp
     };
   }

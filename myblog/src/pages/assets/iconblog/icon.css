@@ -50,3 +50,8 @@
 .icon-fullscreen:before {
     content: "\E614";
 }
+.icon-send:before{
+    content:'\E604';
+}
+.next:before{content:"\e60e";}
+.opt:before{content:"\e699";}

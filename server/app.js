@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var index = require('./routes/index');
-var users = require('./routes/users');
+var theme = require('./routes/theme');
 var config = require('./config');
 var busboy = require('connect-busboy');
 var bytes = require('bytes');
@@ -75,6 +75,6 @@ app.use('/',function (req,res,next) {
 app.use('/',statics());
 
 app.use('/', index);
-
+app.use('/', theme);
 
 module.exports = app;

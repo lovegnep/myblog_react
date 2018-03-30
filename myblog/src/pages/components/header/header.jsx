@@ -40,16 +40,18 @@ class PublicHeader extends Component {
         let rat = this.props.loginStatus ? '登出' : '登陆';
         let tt = null;
         let self = this;
+        let newtheme = null;
         if (!this.props.loginStatus) {
-            tt = <NavLink to={tar} exact className="nav-link icon-jiantou-copy-copy">
+            tt = <NavLink to={tar} exact className="nav-link iconfont next">
                 { rat }
             </NavLink>
         }else{
-            tt = <a className="nav-link icon-jiantou-copy-copy" onClick={this.loginout.bind(self)}>登出</a>
+            tt = <a className="nav-link iconfont next" onClick={this.loginout.bind(self)}>登出</a>
+            newtheme = <NavLink to="/newtheme" exact className="nav-link iconfont next">新建文章</NavLink>
         }
         return (
             <header className="header-container">
-                <span className="header-slide-icon icon-catalog" onClick={this.toggleNav}></span>
+                <span className="header-slide-icon iconfont opt" onClick={this.toggleNav}></span>
                 <span className="header-title">{this.props.title}</span>
                 {
                     this.props.record && <NavLink to="/record" exact className="header-link icon-jilu"></NavLink>
@@ -65,9 +67,10 @@ class PublicHeader extends Component {
                     {
                         this.state.navState &&
                         <aside key='nav-slide' className="nav-slide-list" onClick={this.toggleNav}>
-                            <NavLink to="/" exact className="nav-link icon-jiantou-copy-copy">首页</NavLink>
+                            <NavLink to="/" exact className="nav-link iconfont next">首页</NavLink>
                             {tt}
-                            <NavLink to="/search" exact className="nav-link icon-jiantou-copy-copy">搜索</NavLink>
+                            <NavLink to="/search" exact className="nav-link iconfont next">搜索</NavLink>
+                            {newtheme}
                         </aside>
                     }
                 </ReactCSSTransitionGroup>

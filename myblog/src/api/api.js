@@ -242,6 +242,45 @@ class API extends Server {
         }
 
     }
+    async addType(params = {}) {
+        try {
+            let result = await this.axios('post', 'http://39.108.56.116:3000/addnewtype', params);
+            if (result && result.status === 1) {
+                return result;
+            } else {
+                let err = {
+                    tip: '新增分类失败',
+                    response: result,
+                    data: params,
+                    url: 'http://39.108.56.116:3000/theme/addnewtype',
+                }
+                throw err;
+            }
+        } catch (err) {
+            throw err;
+        }
+
+    }
+    async addNewTheme(params = {}) {
+        try {
+            let result = await this.axios('post', 'http://39.108.56.116:3000/newtheme', params);
+            if (result && result.status === 1) {
+                return result;
+            } else {
+                let err = {
+                    tip: '新建文章失败',
+                    response: result,
+                    data: params,
+                    url: 'http://39.108.56.116:3000/theme/newtheme',
+                }
+                throw err;
+            }
+        } catch (err) {
+            throw err;
+        }
+
+    }
+
 }
 
 export default new API();

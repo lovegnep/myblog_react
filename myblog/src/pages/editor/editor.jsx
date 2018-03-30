@@ -12,6 +12,8 @@ import './edit.scss';
 class Editor extends Component{
   constructor(props){
     super(props);
+    this.submit = props.cb;
+    this.editorobj = null;
   }
   
   componentDidMount(){
@@ -22,17 +24,25 @@ class Editor extends Component{
     extf();
     marked.call(window||global);
     let edit = global.Editor;
-    let editorobj = new edit();
-    editorobj.render();
+    this.editorobj = new edit();
+    this.editorobj.render();
+  }
+
+  handleSubmit(){
+     let content = this.editorobj.codemirror.getValue();
+     if(!content || content.length < 2){
+       return alert('内容太短');
+     }
+     this.submit(content);
   }
   render(){
+    let self = this;
     return (
       <div className='editor-contain'>
         <textarea></textarea> 
         <div className='edit_buttons'>
-                            <input type="submit" className="subbut" data-loading-text="提交中"
-                                   value="提交"/>
-                        </div> 
+           <span className="iconfont icon-send editbut" onClick={self.handleSubmit.bind(self)}></span>
+        </div> 
       </div>
     )
 

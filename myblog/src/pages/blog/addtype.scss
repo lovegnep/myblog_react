@@ -1,0 +1,31 @@
+.addtype-contain{
+.backpanel{
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  background-color: #000000;
+  opacity:0.8;
+  }
+  .entity{
+    position: fixed;
+    top: 50%;
+    left: 20%;
+    z-index: 1001;
+    height: 16%;
+    width: 50%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    .typename{
+      font-size:30px;
+    }  
+    input{
+      width:50%;
+      height:40px;
+      border: solid;
+    }
+  }
+}
