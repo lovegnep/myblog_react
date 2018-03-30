@@ -280,7 +280,82 @@ class API extends Server {
         }
 
     }
+    async deleTheme(params = {}) {
+        try {
+            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/delete', params);
+            if (result && result.status === 1) {
+                return result;
+            } else {
+                let err = {
+                    tip: '删除文章失败',
+                    response: result,
+                    data: params,
+                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/delete',
+                }
+                throw err;
+            }
+        } catch (err) {
+            throw err;
+        }
 
+    }
+    async editTheme(params = {}) {
+        try {
+            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/edit', params);
+            if (result && result.status === 1) {
+                return result;
+            } else {
+                let err = {
+                    tip: '修改文章失败',
+                    response: result,
+                    data: params,
+                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/edit',
+                }
+                throw err;
+            }
+        } catch (err) {
+            throw err;
+        }
+
+    }
+    async secretTheme(params = {}) {
+        try {
+            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/addsecret', params);
+            if (result && result.status === 1) {
+                return result;
+            } else {
+                let err = {
+                    tip: '隐藏文章失败',
+                    response: result,
+                    data: params,
+                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/addsecret',
+                }
+                throw err;
+            }
+        } catch (err) {
+            throw err;
+        }
+
+    }
+    async unsecretTheme(params = {}) {
+        try {
+            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/delesecret', params);
+            if (result && result.status === 1) {
+                return result;
+            } else {
+                let err = {
+                    tip: '取消隐藏文章失败',
+                    response: result,
+                    data: params,
+                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/delesecret',
+                }
+                throw err;
+            }
+        } catch (err) {
+            throw err;
+        }
+
+    }
 }
 
 export default new API();

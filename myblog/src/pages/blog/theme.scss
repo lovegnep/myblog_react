@@ -6,6 +6,14 @@
     @include font(36px, $base-color);
     padding: 30px;
   }
+  .tttt{
+    text-align:right;
+    line-height: 30px;
+    span{
+      font-size:30px;
+      padding-right: 10px;
+    }
+  }
   .tips{
     @include font(20px);
     padding: 5px;

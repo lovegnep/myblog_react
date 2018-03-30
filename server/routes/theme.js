@@ -43,5 +43,79 @@ router.post('/newtheme',function(req,res,next){//新建文章
   res.send({status:1,err:"",_id:theme._id});    
   });
 });
-
+router.post('/theme/:id/delete',function (req,res,next) {
+    if(!req.session.user || req.session.user !== 'admin'){
+        var data = {status:0,message:'你不是管理员'};
+        res.send(data);
+        return;
+    }
+    var themeid = req.params.id;
+    var condition = {_id:themeid};
+    var updates={$set:{deleted:true}};
+    Theme.update(condition,updates,function (err,doc) {
+        if(err){
+            next();
+        }
+        var data={status:1,err:"删除成功"};
+        res.send(data);
+    });
+});
+router.post('/theme/:id/edit',function (req,res,next) {
+    if(!req.session.user || req.session.user !== 'admin'){
+        var data = {status:0,message:'你不是管理员'};
+        res.send(data);
+        return;
+    }
+    var themeid = req.params.id;
+    var title = req.body.title;
+    var tab = req.body.tab;
+    var content = req.body.t_content;
+    Theme.findById(themeid,function (err,doc) {
+        if(err){next(err)}
+        if(doc){
+            doc.title = title;
+            doc.content = content;
+            doc.tab = tab;
+            doc.update_at = Date.now();
+            doc.save();
+            res.send({status:1,message:'修改成功'});
+        }else{
+            res.send({status:0,message:'文章不存在，修改失败'});
+        }
+    });
+});
+router.post('/theme/:id/addsecret',function (req,res,next) {
+    if(!req.session.user || req.session.user !== 'admin'){
+        var data = {status:0,message:'你不是管理员'};
+        res.send(data);
+        return;
+    }
+    var themeid = req.params.id;
+    var condition = {_id:themeid};
+    var updates={$set:{secret:true}};
+    Theme.update(condition,updates,function (err,doc) {
+        if(err){
+            next();
+        }
+        var data={status:1,message:'隐藏成功'};
+        res.send(data);
+    });
+});
+router.post('/theme/:id/delesecret',function (req,res,next) {
+    if(!req.session.user || req.session.user !== 'admin'){
+        var data = {status:0,message:'你不是管理员'};
+        res.send(data);
+        return;
+    }
+    var themeid = req.params.id;
+    var condition = {_id:themeid};
+    var updates={$set:{secret:false}};
+    Theme.update(condition,updates,function (err,doc) {
+        if(err){
+            next(err);
+        }
+        var data={status:0,message:'取消隐藏成功'};
+        res.send(data);
+    });
+});
 module.exports = router;

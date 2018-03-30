@@ -30,7 +30,7 @@ class Theme extends Component {
         this.setState({theme: result.data[0], reply: result.data[1]});
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getTheme();
     }
 
@@ -41,19 +41,55 @@ class Theme extends Component {
     handleAnsChange(value) {
         //this.setState({ans: value});
     }
-
+    deleteTheme = async ()=>{
+        let result = await API.deleTheme({_id: this._id});
+        this.props.history.push({
+            pathname:'/',
+        });
+    }
+    secretTheme = async ()=>{
+        let result = await API.secretTheme({_id: this._id});
+        let updatedTheme = {...this.state.theme};
+        updatedTheme.secret = !updatedTheme.secret;
+        this.setState({theme:updatedTheme});
+    }
+    unsecretTheme = async ()=>{
+        let result = await API.unsecretTheme({_id: this._id});
+        let updatedTheme = {...this.state.theme};
+        updatedTheme.secret = !updatedTheme.secret;
+        this.setState({theme:updatedTheme});
+    }
+    editTheme(){
+        this.props.history.push({
+            pathname:'/theme/edit',
+            state:{
+                theme:this.state.theme
+            }
+        });
+    }
+    handleSecret(){
+        if(this.state.theme.secret){
+            this.unsecretTheme();
+        }else{
+            this.secretTheme();
+        }
+    }
     render() {
         let self = this;
         let toolbar = null;
         let createat = new Date(this.state.theme.create_at).toLocaleDateString();
         let updateat = new Date(this.state.theme.update_at).toLocaleDateString();
         if (this.loginStatus) {
-            toolbar = <p><span>删除</span><span>编辑</span><span>{this.state.theme.secret ? '取消隐藏' : '隐藏'}</span></p>;
+            toolbar = <p className="tttt">
+                <span onClick={self.deleteTheme.bind(self)} className="iconfont dele"></span>
+                <span onClick={self.editTheme.bind(self)} className="iconfont editt"></span>
+                <span onClick={self.handleSecret.bind(self)} className={this.state.theme.secret ? "iconfont unsecret" : "iconfont secret"}>
+                </span></p>;
         }
 
         return (
             <div className="theme-container">
-                <PublicHeader title='文章'/>
+                <PublicHeader title='文章' loginStatus={this.loginStatus} />
                 <div>
                     <div>
                         <p className="title">{this.state.theme.title}</p>
