@@ -11,14 +11,18 @@ import Editor from '../editor/editor';
 class Theme extends Component {
     constructor(props) {
         super(props);
+        let state = props.location.state;
         this._id = props.match.params.id;
-        this.loginStatus = false;
+        if(state && state.loginStatus){
+            this.loginStatus = true;
+        }else{
+            this.loginStatus = false;
+        }
         this.state = {
             theme: {},
             reply: [],
             ans: '呵呵'
         };
-        console.log(global, window);
     }
 
     getTheme = async () => {

@@ -53,12 +53,6 @@ class PublicHeader extends Component {
             <header className="header-container">
                 <span className="header-slide-icon iconfont opt" onClick={this.toggleNav}></span>
                 <span className="header-title">{this.props.title}</span>
-                {
-                    this.props.record && <NavLink to="/record" exact className="header-link icon-jilu"></NavLink>
-                }
-                {
-                    this.props.confirm && <NavLink to="/" exact className="header-link header-link-confim">确定</NavLink>
-                }
                 <ReactCSSTransitionGroup
                     component={this.FirstChild}
                     transitionName="nav"
