@@ -7,22 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import PublicHeader from '../components/header/header';
 import './theme.scss';
 import Editor from '../editor/editor';
-//let MarkdownEditor = require('react-markdown-editor').MarkdownEditor;
 
-/*let TestComponent = React.createClass({
-    render: function() {
-        return (
-            <MarkdownEditor initialContent="Test" iconsSet="font-awesome"/>
-        );
-    }
-});
-class EditReactMD extends Component{
-    render() {
-        return (
-            <MarkdownEditor initialContent="Test" iconsSet="font-awesome"/>
-        );
-    }
-}*/
 class Theme extends Component {
     constructor(props) {
         super(props);
@@ -61,22 +46,7 @@ class Theme extends Component {
         if (this.loginStatus) {
             toolbar = <p><span>删除</span><span>编辑</span><span>{this.state.theme.secret ? '取消隐藏' : '隐藏'}</span></p>;
         }
-        let modules = {
-            toolbar: [
-                [{'header': [1, 2, false]}],
-                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-                ['link', 'image'],
-                ['clean']
-            ],
-        };
 
-        let formats = [
-            'header',
-            'bold', 'italic', 'underline', 'strike', 'blockquote',
-            'list', 'bullet', 'indent',
-            'link', 'image'
-        ];
         return (
             <div className="theme-container">
                 <PublicHeader title='文章'/>
