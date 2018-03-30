@@ -99,7 +99,8 @@ class NewTheme extends Component {
                         <input onChange={self.onTitleChange.bind(self)} />
                     </li>
                     <li><span>分类</span>
-                        <select name="tab"defaultValue="--请选择--" onChange={self.handleTabChange.bind(self)}>
+                        <select name="tab" onChange={self.handleTabChange.bind(self)}>
+                            <option selected disabled>--请选择--</option>
                           <option>新建分类</option>
                           {
                              this.state.typeList.map(function(type, index){
