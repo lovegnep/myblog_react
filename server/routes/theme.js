@@ -114,7 +114,7 @@ router.post('/theme/:id/delesecret',function (req,res,next) {
         if(err){
             next(err);
         }
-        var data={status:0,message:'取消隐藏成功'};
+        var data={status:1,message:'取消隐藏成功'};
         res.send(data);
     });
 });
