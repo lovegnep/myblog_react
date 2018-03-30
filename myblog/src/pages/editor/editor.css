@@ -36,7 +36,7 @@ you can use the generic selector below, but it's slower:
 	text-transform: none;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
-}
+}/*
 .icon-bold:before {
 	content: "\e000";
 }
@@ -87,7 +87,7 @@ you can use the generic selector below, but it's slower:
 }
 .icon-preview:before {
 	content: "\e002";
-}
+}*/
 /* BASICS */
 
 .CodeMirror {
