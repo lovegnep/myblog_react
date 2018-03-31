@@ -42,12 +42,12 @@ class PublicHeader extends Component {
         let self = this;
         let newtheme = null;
         if (!this.props.loginStatus) {
-            tt = <NavLink to={tar} exact className="nav-link iconfont next">
+            tt = <NavLink to={tar} exact className="nav-link iconfont loginin">
                 { rat }
             </NavLink>
         }else{
-            tt = <a className="nav-link iconfont next" onClick={this.loginout.bind(self)}>登出</a>
-            newtheme = <NavLink to="/newtheme" exact className="nav-link iconfont next">新建文章</NavLink>
+            tt = <a className="nav-link iconfont loginout" onClick={this.loginout.bind(self)}>登出</a>
+            newtheme = <NavLink to="/newtheme" exact className="nav-link iconfont newtheme">新建文章</NavLink>
         }
         return (
             <header className="header-container">
@@ -61,9 +61,9 @@ class PublicHeader extends Component {
                     {
                         this.state.navState &&
                         <aside key='nav-slide' className="nav-slide-list" onClick={this.toggleNav}>
-                            <NavLink to="/" exact className="nav-link iconfont next">首页</NavLink>
+                            <NavLink to="/" exact className="nav-link iconfont homee">首页</NavLink>
                             {tt}
-                            <NavLink to="/search" exact className="nav-link iconfont next">搜索</NavLink>
+                            <NavLink to="/search" exact className="nav-link iconfont searchh">搜索</NavLink>
                             {newtheme}
                         </aside>
                     }

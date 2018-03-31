@@ -40,7 +40,7 @@ class Editor extends Component{
     let self = this;
     return (
       <div className='editor-contain'>
-        <textarea>{this.content}</textarea>
+        <textarea defaultValue={this.content} />
         <div className='edit_buttons'>
            <span className="iconfont icon-send editbut" onClick={self.handleSubmit.bind(self)}></span>
         </div> 

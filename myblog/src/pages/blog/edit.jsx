@@ -18,12 +18,16 @@ class EditTheme extends Component {
         }
         let theme = state.theme;
         this.loginStatus = tmp;
-        this.title = theme.title;
-        this.tab = theme.tab;
+        this._id = theme._id;
+        //this.title = theme.title;
+        //this.tab = theme.tab;
         this.content = theme.content;
         this.state={
             typeList:[],
-            isplay:false
+            isplay:false,
+            title:theme.title,
+            tab:theme.tab,
+            content:theme.table
         }
     }
 
@@ -50,7 +54,8 @@ class EditTheme extends Component {
         if (select.value == '新建分类') {
             this.setState({isplay: true});
         } else {
-            this.tab = select.value;
+            //this.tab = select.value;
+            this.setState({tab:select.value});
         }
 
     }
@@ -75,13 +80,14 @@ class EditTheme extends Component {
     }
 
     onTitleChange(e) {
-        this.title = e.target.value;
+        //this.title = e.target.value;
+        this.setState({title:e.target.value});
     }
 
     addNewTheme = async (obj) => {
-        let result = await API.addNewTheme(obj);
+        let result = await API.editTheme(obj);
         this.props.history.push({
-            pathname: '/theme/' + result._id,
+            pathname: '/theme/' + this._id,
             state: {
                 loginStatus: true
             },
@@ -89,13 +95,13 @@ class EditTheme extends Component {
     }
 
     onSubmit(value) {
-        if (this.title == '' || this.title.length < 5) {
+        if (this.state.title === '' || this.state.title.length < 5) {
             return alert('标题不能少于5个字符');
         }
-        if (this.tab == '' || this.tab.length < 2) {
+        if (this.state.tab === '' || this.state.tab.length < 2) {
             return alert('分类名称不能少于2个字符');
         }
-        this.addNewTheme({tab: this.tab, title: this.title, t_content: value});
+        this.addNewTheme({_id:this._id,tab: this.state.tab, title: this.state.title, t_content: value});
     }
 
     render() {
@@ -106,15 +112,15 @@ class EditTheme extends Component {
                 <div className="newform">
                     <ul>
                         <li><span>标题</span>
-                            <input value={this.title} onChange={self.onTitleChange.bind(self)}/>
+                            <input value={this.state.title} onChange={self.onTitleChange.bind(self)}/>
                         </li>
                         <li><span>分类</span>
-                            <select name="tab" onChange={self.handleTabChange.bind(self)}>
+                            <select name="tab" value={this.state.tab} onChange={self.handleTabChange.bind(self)}>
                                 <option>新建分类</option>
                                 {
                                     this.state.typeList.map(function (type, index) {
                                         if(type === self.tab ){
-                                            return <option selected key={index}>{type}</option>
+                                            return <option key={index}>{type}</option>
                                         }else{
                                             return <option key={index}>{type}</option>
                                         }
