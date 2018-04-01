@@ -10,6 +10,7 @@ var ReplySchema = new Schema({
     theme_id: { type: ObjectId},
     create_at: { type: Date, default: Date.now },
     ups: {type:Number,default:0},
+    downs: {type:Number,default:0},
     reply_id:{type:ObjectId},
     lou:{type:String,default:''},
     deleted: {type: Boolean, default: false},

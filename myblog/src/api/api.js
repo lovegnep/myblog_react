@@ -356,6 +356,45 @@ class API extends Server {
         }
 
     }
+    async addReply(params = {}) {
+        try {
+            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/reply', params);
+            if (result && result.status === 1) {
+                return result;
+            } else {
+                let err = {
+                    tip: '评论失败',
+                    response: result,
+                    data: params,
+                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/reply',
+                }
+                throw err;
+            }
+        } catch (err) {
+            throw err;
+        }
+
+    }
+
+    async optReply(params = {}) {//对评论赞或者踩
+        try {
+            let result = await this.axios('post', 'http://39.108.56.116:3000/reply/'+params._id+'/replyopt', params);
+            if (result && result.status === 1) {
+                return result;
+            } else {
+                let err = {
+                    tip: '操作失败',
+                    response: result,
+                    data: params,
+                    url: 'http://39.108.56.116:3000/reply/'+params._id+'/replyopt',
+                }
+                throw err;
+            }
+        } catch (err) {
+            throw err;
+        }
+
+    }
 }
 
 export default new API();

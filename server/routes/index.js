@@ -204,6 +204,15 @@ router.get('/theme/:id', function(req, res, next){
            return cb(err);
        }
        reply = reply||[];
+       reply.sort(function(a,b){
+           return a.create_at - b.create_at;
+       });
+       /*let tmpnum = 1;
+       reply.forEach(function(item){
+           item.lou = tmpnum;
+           tmpnum++;
+           item.save();
+       });*/
        return cb(null, reply);
 
     });

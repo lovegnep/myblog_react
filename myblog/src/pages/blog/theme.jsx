@@ -18,10 +18,13 @@ class Theme extends Component {
         }else{
             this.loginStatus = false;
         }
+        this.upstate = new Map();
+        this.downstate = new Map();
         this.state = {
             theme: {},
             reply: [],
-            ans: '呵呵'
+            ans: '呵呵',
+            curreply:0
         };
     }
 
@@ -75,6 +78,78 @@ class Theme extends Component {
             this.secretTheme();
         }
     }
+    addreply = async(value,replyid,lou)=>{
+        let result = await API.addReply({_id:this._id,t_conten:value,reply_id:replyid,lou:lou});
+        let newreply = [];
+        this.state.reply.forEach(function(item){
+            let obj = {...item};
+            newreply.push(obj);
+        });
+        newreply.push(result.data);
+
+        this.setState({reply:newreply,curreply:0});
+    }
+    onSubmit(value, param) {
+        if(!param){//直接对文章回复
+            if(!value || value.length < 2){
+                return alert('评论内容太短');
+            }
+            this.addreply(value);
+        }else{//对评论进行回复
+            let replyid = param;
+            let lou = 0;
+            for(let i = 0; i < this.state.reply.length; i++){
+                if(this.state.reply[i]._id === replyid){
+                    lou = i+1;
+                }
+            }
+            this.addreply(value, replyid, lou);
+        }
+    }
+    optup = async(replyid)=>{//点击踩
+        let flag = this.upstate.get(replyid);
+        let result = null;
+        if(!flag){
+            flag = 0;
+        }
+        if(flag === 0){
+            result = await API.optReply({_id:replyid,act:1,flag:1});
+        }else{
+            result = await API.optReply({_id:replyid,act:1,flag:0});
+        }
+        this.upstate.set(replyid, flag === 0?1:0);
+    }
+    optdown = async(replyid)=>{//点击赞
+        let flag = this.downstate.get(replyid);
+        let result = null;
+        if(!flag){
+            flag = 0;
+        }
+        if(flag === 0){
+            result = await API.optReply({_id:replyid,act:2,flag:1});
+        }else{
+            result = await API.optReply({_id:replyid,act:2,flag:0});
+        }
+        this.downstate.set(replyid, flag === 0?1:0);
+    }
+    optans = function(replyid){//点击回复图标
+        this.setState({curreply:replyid});
+    }
+    onoptreply(type,replyid){
+        switch(type){
+            case 1:
+                this.optup(replyid);
+                break;
+            case 2:
+                this.optdown(replyid);
+                break;
+            case 3:
+                this.optans(replyid);
+                break;
+            default:
+                break;
+        }
+    }
     render() {
         let self = this;
         let toolbar = null;
@@ -108,15 +183,23 @@ class Theme extends Component {
                         <p className="commentHead">文章点评</p>
                         {
                             this.state.reply.map(function (item, index) {
+                                let tmpp = null;
+                                if(this.state.curreply === item._id){
+                                    tmpp = <Editor cb={self.onSubmit.bind(self)} param={item._id}/>
+                                }
                                 return <div className="commentItem" key={index}>
-                                    <span className="lou">{item.lou}楼</span><span
+                                    <span className="lou">{index}楼</span><span
                                     className="createTime">创建时间{new Date(item.create_at).toLocaleDateString()}</span>
+                                    <span className="atlou">{"@"+item.lou}</span>
                                     <p className="content">{item.content}</p>
                                     <div className="interaction">
-                                        <a><span className="iconfont noup">{item.ups}</span></a>
-                                        <a><span className="iconfont nodown"></span></a>
-                                        <a><span className="iconfont ans"></span></a>
+                                        <a><span className="iconfont noup" onClick={self.onoptreply.bind(self,1,item._id)}>{item.ups > 0 ? item.ups : ''}</span></a>
+                                        <a><span className="iconfont nodown" onClick={self.onoptreply.bind(self,2,item._id)}>{item.downs > 0 ? item.downs : ''}</span></a>
+                                        <a><span className="iconfont ans" onClick={self.onoptreply.bind(self,3,item._id)}></span></a>
                                     </div>
+                                    {
+                                        tmpp
+                                    }
                                 </div>
                             })
                         }
@@ -125,7 +208,7 @@ class Theme extends Component {
                         <p className="ansHead">添加回复</p>
                     </div>
                     <div className="edit_draft">
-                      <Editor />
+                      <Editor cb={self.onSubmit.bind(self, 0)}/>
                     </div>
                     <div className="answer">
                         <span className="iconfont commentans pos"></span>

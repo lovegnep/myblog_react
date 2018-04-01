@@ -13,6 +13,7 @@ class Editor extends Component{
   constructor(props){
     super(props);
     this.submit = props.cb;
+    this.param1 = props.param;
     this.content = props.content;
     this.editorobj = null;
   }
@@ -34,7 +35,7 @@ class Editor extends Component{
      if(!content || content.length < 2){
        return alert('内容太短');
      }
-     this.submit(content);
+     this.submit(content, this.param1);
   }
   render(){
     let self = this;

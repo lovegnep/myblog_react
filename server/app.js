@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var index = require('./routes/index');
 var theme = require('./routes/theme');
+var reply = require('./routes/reply');
 var config = require('./config');
 var busboy = require('connect-busboy');
 var bytes = require('bytes');
@@ -76,5 +77,6 @@ app.use('/',statics());
 
 app.use('/', index);
 app.use('/', theme);
+app.use('/', reply);
 
 module.exports = app;
