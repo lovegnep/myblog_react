@@ -35,12 +35,13 @@ class Login extends Component {
     login = async params => {
         let res = await API.login(params);
         //alert('登陆成功');
-        this.props.history.push({
+        this.props.history.goBack();
+        /*this.props.history.push({
             pathname:'/',
             state:{
                 loginStatus:true
             },
-        });
+        });*/
     }
     submit = () => {
         let name = this.state.name;

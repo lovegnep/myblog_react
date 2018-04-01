@@ -24,7 +24,10 @@ class Theme extends Component {
             theme: {},
             reply: [],
             ans: '呵呵',
-            curreply:0
+            curreply:0,
+            upstate:new Map(),
+            downstate:new Map(),
+            loginStatus:this.loginStatus
         };
     }
 
@@ -32,9 +35,13 @@ class Theme extends Component {
         let result = await API.getTheme({_id: this._id});
         this.setState({theme: result.data[0], reply: result.data[1]});
     }
-
+    getLoginStatus = async () => {
+        let result = await API.getLoginStatus();
+        this.setState({loginStatus: result.data});
+    }
     componentDidMount() {
         this.getTheme();
+        this.getLoginStatus();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -107,7 +114,7 @@ class Theme extends Component {
         }
     }
     optup = async(replyid)=>{//点击踩
-        let flag = this.upstate.get(replyid);
+        let flag = this.state.upstate.get(replyid);
         let result = null;
         if(!flag){
             flag = 0;
@@ -117,10 +124,24 @@ class Theme extends Component {
         }else{
             result = await API.optReply({_id:replyid,act:1,flag:0});
         }
-        this.upstate.set(replyid, flag === 0?1:0);
+        let newupstate = new Map();//更新upstate
+        this.state.upstate.forEach(function(value, key){
+            newupstate.set(key,value);
+        });
+        let newreply = [];
+        this.state.reply.forEach(function(item){
+            let obj = {...item};
+            if(obj._id === replyid){
+                obj.ups = obj.ups+(flag === 0?1:-1);
+            }
+            newreply.push(obj);
+        });
+        newupstate.set(replyid, flag === 0?1:0);
+
+        this.setState({upstate:newupstate,reply:newreply});
     }
     optdown = async(replyid)=>{//点击赞
-        let flag = this.downstate.get(replyid);
+        let flag = this.state.downstate.get(replyid);
         let result = null;
         if(!flag){
             flag = 0;
@@ -130,12 +151,30 @@ class Theme extends Component {
         }else{
             result = await API.optReply({_id:replyid,act:2,flag:0});
         }
-        this.downstate.set(replyid, flag === 0?1:0);
+        let newdownstate = new Map();
+        this.state.downstate.forEach(function(value, key){
+            newdownstate.set(key,value);
+        });
+        newdownstate.set(replyid, flag === 0?1:0);
+        let newreply = [];
+        this.state.reply.forEach(function(item){
+            let obj = {...item};
+            if(obj._id === replyid){
+                obj.downs = obj.downs+(flag === 0?1:-1);
+            }
+            newreply.push(obj);
+        });
+        this.setState({downstate:newdownstate,reply:newreply});
     }
     optans = function(replyid){//点击回复图标
-        this.setState({curreply:replyid});
+        if(this.state.curreply === replyid){
+            this.setState({curreply:0});
+        }else{
+            this.setState({curreply:replyid});
+        }
     }
     onoptreply(type,replyid){
+        console.log("onoptreply:", type, replyid);
         switch(type){
             case 1:
                 this.optup(replyid);
@@ -150,12 +189,15 @@ class Theme extends Component {
                 break;
         }
     }
+    handleLoginout(){
+        this.setState({loginStatus:false});
+    }
     render() {
         let self = this;
         let toolbar = null;
         let createat = new Date(this.state.theme.create_at).toLocaleDateString();
         let updateat = new Date(this.state.theme.update_at).toLocaleDateString();
-        if (this.loginStatus) {
+        if (this.state.loginStatus) {
             toolbar = <p className="tttt">
                 <span onClick={self.deleteTheme.bind(self)} className="iconfont dele"></span>
                 <span onClick={self.editTheme.bind(self)} className="iconfont editt"></span>
@@ -165,7 +207,7 @@ class Theme extends Component {
 
         return (
             <div className="theme-container">
-                <PublicHeader title='文章' loginStatus={this.loginStatus} />
+                <PublicHeader title='文章' loginStatus={this.state.loginStatus} cb={this.handleLoginout.bind(this)} />
                 <div>
                     <div>
                         <p className="title">{this.state.theme.title}</p>
@@ -184,6 +226,14 @@ class Theme extends Component {
                         {
                             this.state.reply.map(function (item, index) {
                                 let tmpp = null;
+                                let uptmp = self.state.upstate.get(item._id);
+                                if(!uptmp){
+                                    uptmp = 0;
+                                }
+                                let downtmp = self.state.downstate.get(item._id);
+                                if(!downtmp){
+                                    downtmp = 0;
+                                }
                                 if(self.state.curreply === item._id){
                                     tmpp = <Editor cb={self.onSubmit.bind(self)} param={item._id}/>
                                 }
@@ -195,9 +245,9 @@ class Theme extends Component {
                                     }
                                     <p className="content">{item.content}</p>
                                     <div className="interaction">
-                                        <a><span className="iconfont noup" onClick={self.onoptreply.bind(self,1,item._id)}>{item.ups > 0 ? item.ups : ''}</span></a>
-                                        <a><span className="iconfont nodown" onClick={self.onoptreply.bind(self,2,item._id)}>{item.downs > 0 ? item.downs : ''}</span></a>
-                                        <a><span className="iconfont ans" onClick={self.onoptreply.bind(self,3,item._id)}></span></a>
+                                        <a><span className={"iconfont "+ (uptmp === 0 ? "noup" : "hasup")} onClick={self.onoptreply.bind(self,1,item._id)}>{item.ups > 0 ? item.ups : ''}</span></a>
+                                        <a><span className={"iconfont " + (downtmp === 0 ? "nodown" : 'hasdown')} onClick={self.onoptreply.bind(self,2,item._id)}>{item.downs > 0 ? item.downs : ''}</span></a>
+                                        <a><span className={"iconfont " + (self.state.curreply === item._id ? "hasans" : "ans")} onClick={self.onoptreply.bind(self,3,item._id)}></span></a>
                                     </div>
                                     {
                                         tmpp

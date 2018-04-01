@@ -17,7 +17,8 @@
 .noup:before{content:"\e6bb";}
 .hasdown:before{content:"\e635";}
 .nodown:before{content:"\e6cb";}
-.ans:before{content:"\e611";}
+.hasans:before{content:"\e611";}
+.ans:before{content:"\e62c";}
 .member:before{content:"\e600";}
 .commentans:before{content:"\e679";}
 .icon-bold:before {
