@@ -31,9 +31,19 @@ class PublicHeader extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
     }
-    loginout = async()=>{
+
+    loginout = async () => {
         let result = await API.loginout();
         this.props.cb();
+    }
+
+    handleTypeChange(e) {//选择tab时会调用父组件的cb
+        let tab = e.target.value;
+        this.props.typeobj.updateTL(tab);
+        this.toggleNav();
+    }
+    handleClickSelect(e){
+        e.stopPropagation();
     }
     render() {
         let tar = this.props.loginStatus ? '/loginout' : '/login';
@@ -41,11 +51,36 @@ class PublicHeader extends Component {
         let tt = null;
         let self = this;
         let newtheme = null;
+        let typeselect = null;
+        let plselect = null;
+
+        if (this.props.typeobj && this.props.typeobj.typeList && this.props.typeobj.typeList.length > 0) {
+            if (!this.props.typeobj.curtype || this.props.typeobj.curtype == '') {
+                plselect = <option selected disabled>{"--请选择--"}</option>
+            }
+            typeselect = <div className="nav-link iconfont typeicon" onClick={this.handleClickSelect.bind(this)}>
+                <span>分类</span>
+                <select className="nav-sel" onChange={this.handleTypeChange.bind(this)}>
+                    { plselect}
+                    <option>全部</option>
+                    {
+                        this.props.typeobj.typeList.map(function (item, index) {
+                            if (item === self.props.typeobj.curtype) {
+                                return <option selected key={index}>{item}</option>
+                            } else {
+                                return <option key={index}>{item}</option>
+                            }
+
+                        })
+                    }
+                </select>
+            </div>
+        }
         if (!this.props.loginStatus) {
             tt = <NavLink to={tar} exact className="nav-link iconfont loginin">
                 { rat }
             </NavLink>
-        }else{
+        } else {
             tt = <a className="nav-link iconfont loginout" onClick={this.loginout.bind(self)}>登出</a>
             newtheme = <NavLink to="/newtheme" exact className="nav-link iconfont newtheme">新建文章</NavLink>
         }
@@ -60,12 +95,15 @@ class PublicHeader extends Component {
                     transitionLeaveTimeout={300}>
                     {
                         this.state.navState &&
-                        <aside key='nav-slide' className="nav-slide-list" onClick={this.toggleNav}>
-                            <NavLink to="/" exact className="nav-link iconfont homee">首页</NavLink>
-                            {tt}
-                            <NavLink to="/search" exact className="nav-link iconfont searchh">搜索</NavLink>
-                            {newtheme}
-                        </aside>
+                            <aside key='nav-slide' className="nav-slide-list" onClick={this.toggleNav}>
+                                <NavLink to="/" exact className="nav-link iconfont homee">首页</NavLink>
+                                {tt}
+                                <NavLink to="/search" exact className="nav-link iconfont searchh">搜索</NavLink>
+                                {newtheme}
+                                {typeselect}
+                            </aside>
+
+
                     }
                 </ReactCSSTransitionGroup>
 

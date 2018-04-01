@@ -13,7 +13,7 @@ import Editor from '../editor/editor';
 class Home extends Component {
     constructor(props) {
         super(props);
-
+        this.handleScroll = this.scrollHandler.bind(this)
         let state = this.props.location.state;
         let tmp = false;
         if (state && state.loginStatus) {
@@ -24,7 +24,7 @@ class Home extends Component {
         this.state = {
             themeList: [],
             type: [],
-            curType: '全部',
+            curType: '',
             loginStatus: tmp
         };
     }
@@ -44,8 +44,8 @@ class Home extends Component {
         let result = await API.getThemeList({type: e.target.innerText});
         this.setState({themeList: result.data, curType: e.target.innerText});
     }
-    getThemeList = async () => {
-        let result = await API.getThemeList({type: this.state.curType});
+    getThemeList = async (obj) => {
+        let result = await API.getThemeList(obj);
         this.setState({themeList: result.data});
     }
     getTypes = async () => {
@@ -58,11 +58,23 @@ class Home extends Component {
         this.getThemeList();
         this.getLoginStatus();
     }
-
+    scrollHandler(e){
+        let $ = window.jquery;
+        //滚动条所在位置的高度
+        let totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+        //当前文档高度   小于或等于   滚动条所在位置高度  则是页面底部
+        if(($(document).height()) <= totalheight+2) {
+            //页面到达底部
+            console.log('到达');
+        }
+    }
     componentDidMount() {
         this.initData();
+        window.addEventListener('scroll', this.handleScroll);
     }
-
+    componentWillUnmount(){
+        window.removeEventListener('scroll',this.handleScroll);
+    }
     getLoginStatus = async () => {
         let result = await API.getLoginStatus();
         this.setState({loginStatus: result.data});
@@ -71,20 +83,15 @@ class Home extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
     }
-
+    updateTL(tab){//根据tab更新主题列表
+        this.getThemeList({tab:tab});
+        this.setState({curtype:tab});
+    }
     render() {
         let self = this;
         return (
             <main className="home-container">
-                <PublicHeader title="首页" loginStatus={this.state.loginStatus} cb={this.handleLoginOut.bind(this)}/>
-                <div>
-                    {
-                        this.state.type.map(function (item, index) {
-                            return <span className="common-tab" name={item} key={index}
-                                         onClick={self.handleClickType.bind(self)}>{item}</span>
-                        })
-                    }
-                </div>
+                <PublicHeader title="首页" typeobj={{curtype:this.state.curtype,typeList:this.state.type, updateTL:this.updateTL.bind(this)}} loginStatus={this.state.loginStatus} cb={this.handleLoginOut.bind(this)}/>
                 <div>
                     {
                         this.state.themeList.map(function (item, index) {

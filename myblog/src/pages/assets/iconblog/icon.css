@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'iconfont';  /* project id 603186 */
-    src: url('//at.alicdn.com/t/font_603186_1siw32hbld4h1tt9.eot');
-    src: url('//at.alicdn.com/t/font_603186_1siw32hbld4h1tt9.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_603186_1siw32hbld4h1tt9.woff') format('woff'),
-    url('//at.alicdn.com/t/font_603186_1siw32hbld4h1tt9.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_603186_1siw32hbld4h1tt9.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_603186_v7z140socptit3xr.eot');
+    src: url('//at.alicdn.com/t/font_603186_v7z140socptit3xr.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_603186_v7z140socptit3xr.woff') format('woff'),
+    url('//at.alicdn.com/t/font_603186_v7z140socptit3xr.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_603186_v7z140socptit3xr.svg#iconfont') format('svg');
 }
 .iconfont {
     font-family:"iconfont" !important;
@@ -66,3 +66,4 @@
 .loginin:before{content:'\e621';}
 .loginout:before{content:'\e846';}
 .newtheme:before{content:'\e617';}
+.typeicon:before{content:"\e659";}
