@@ -80,7 +80,7 @@ router.post('/theme/:id/reply',function (req,res,next) {//添加回复
             reply.lou = lou;
             reply.save();
 
-            return res.send({status:1,message:'添加回复成功'});
+            return res.send({status:1,message:'添加回复成功',data:reply});
         });
     }
 

@@ -79,7 +79,7 @@ class Theme extends Component {
         }
     }
     addreply = async(value,replyid,lou)=>{
-        let result = await API.addReply({_id:this._id,t_conten:value,reply_id:replyid,lou:lou});
+        let result = await API.addReply({_id:this._id,t_content:value,reply_id:replyid,lou:lou});
         let newreply = [];
         this.state.reply.forEach(function(item){
             let obj = {...item};
@@ -184,13 +184,15 @@ class Theme extends Component {
                         {
                             this.state.reply.map(function (item, index) {
                                 let tmpp = null;
-                                if(this.state.curreply === item._id){
+                                if(self.state.curreply === item._id){
                                     tmpp = <Editor cb={self.onSubmit.bind(self)} param={item._id}/>
                                 }
                                 return <div className="commentItem" key={index}>
-                                    <span className="lou">{index}楼</span><span
+                                    <span className="lou">{index+1}楼</span><span
                                     className="createTime">创建时间{new Date(item.create_at).toLocaleDateString()}</span>
-                                    <span className="atlou">{"@"+item.lou}</span>
+                                    {
+                                        item.lou&&<span className="atlou">{"@"+item.lou}</span>
+                                    }
                                     <p className="content">{item.content}</p>
                                     <div className="interaction">
                                         <a><span className="iconfont noup" onClick={self.onoptreply.bind(self,1,item._id)}>{item.ups > 0 ? item.ups : ''}</span></a>
@@ -208,7 +210,7 @@ class Theme extends Component {
                         <p className="ansHead">添加回复</p>
                     </div>
                     <div className="edit_draft">
-                      <Editor cb={self.onSubmit.bind(self, 0)}/>
+                      <Editor cb={self.onSubmit.bind(self)} param={0}/>
                     </div>
                     <div className="answer">
                         <span className="iconfont commentans pos"></span>
