@@ -27,7 +27,8 @@ class Theme extends Component {
             curreply:0,
             upstate:new Map(),
             downstate:new Map(),
-            loginStatus:this.loginStatus
+            loginStatus:this.loginStatus,
+            isComment:false
         };
     }
 
@@ -192,6 +193,12 @@ class Theme extends Component {
     handleLoginout(){
         this.setState({loginStatus:false});
     }
+    onClickComment(){
+        let flag = this.state.isComment;
+        this.setState({isComment:!flag});
+        let $ = window.jquery;
+        $('html,body').animate({scrollTop:$('.footer').offset().top}, 800);
+    }
     render() {
         let self = this;
         let toolbar = null;
@@ -241,7 +248,7 @@ class Theme extends Component {
                                     <span className="lou">{index+1}楼</span><span
                                     className="createTime">创建时间{new Date(item.create_at).toLocaleDateString()}</span>
                                     {
-                                        item.lou&&<span className="atlou">{"@"+item.lou}</span>
+                                        item.lou&&<span className="atlou">{"@"+item.lou+'楼'}</span>
                                     }
                                     <p className="content">{item.content}</p>
                                     <div className="interaction">
@@ -256,14 +263,20 @@ class Theme extends Component {
                             })
                         }
                     </div>
-                    <div>
-                        <p className="ansHead">添加回复</p>
-                    </div>
-                    <div className="edit_draft">
-                      <Editor cb={self.onSubmit.bind(self)} param={0}/>
-                    </div>
+
+                    {
+                        this.state.isComment &&  <div>
+                            <div>
+                                <p className="ansHead">添加回复</p>
+                            </div>
+                            <div className="edit_draft">
+                            <Editor cb={self.onSubmit.bind(self)} param={0}/>
+                        </div></div>
+                    }
+
                     <div className="answer">
-                        <span className="iconfont commentans pos"></span>
+                        <span onClick={this.onClickComment.bind(this)}
+                              className={"iconfont " + (this.state.isComment ? "hascommentans" : "commentans")  + " pos"}></span>
                     </div>
                 </div>
                 <Footer/>
