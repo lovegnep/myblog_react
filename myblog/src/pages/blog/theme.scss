@@ -24,6 +24,7 @@
     }
   }
   .theme{
+    word-break: break-word;
     width:100%;
     @include font(30px, $base-color);
     padding: 30px;

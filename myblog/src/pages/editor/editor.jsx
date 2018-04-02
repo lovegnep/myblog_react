@@ -17,7 +17,11 @@ class Editor extends Component{
     this.content = props.content;
     this.editorobj = null;
   }
-  
+  componentWillMount(){
+    let textid = Date.now();
+    textid = textid.toString();
+    this.textid = textid;
+  }  
   componentDidMount(){
     bootstrapp();
     markdowniitt();
@@ -26,7 +30,9 @@ class Editor extends Component{
     extf();
     marked.call(window||global);
     let edit = global.Editor;
-    this.editorobj = new edit();
+    this.editorobj = new edit({
+       element: document.getElementById(this.textid)
+    });
     this.editorobj.render();
   }
 
@@ -41,7 +47,7 @@ class Editor extends Component{
     let self = this;
     return (
       <div className='editor-contain'>
-        <textarea defaultValue={this.content} />
+        <textarea id={this.textid} defaultValue={this.content} />
         <div className='edit_buttons'>
            <span className="iconfont icon-send editbut" onClick={self.handleSubmit.bind(self)}></span>
         </div> 
