@@ -254,4 +254,31 @@ router.post('/upload',function (req,res) {//上传图片
 
     req.pipe(req.busboy);
 });
+router.post("/search", function(req, res){
+  let source = req.body.source;
+  let query = {};
+  if(req.session.user && req.session.user === 'admin'){
+  }else{
+    query.deleted = false;
+    query.secret = false;
+  }
+  let options = { skip: 0, sort: '-update_at'};
+  Theme.find({
+  $or : [ //多条件，数组
+            {title: {$regex:source,$options:"$i"}},
+            {content: {$regex:source,$options:"$i"}}
+        ]
+  },{},options,function (err, themes) {
+        if(err){
+            console.log("err");
+            return res.send({status:0,message:"未知错误"});
+        }
+        if(!themes || themes.length < 1){
+          return res.send({status:1,message:"未查到满足条件的文章"});
+        }
+        return res.send({status:1,data:themes});
+    });
+
+
+});
 module.exports = router;

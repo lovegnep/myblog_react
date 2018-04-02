@@ -4,6 +4,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import API from '../../../api/api';
+import Block from './block';
 import './header.scss';
 
 class PublicHeader extends Component {
@@ -16,11 +17,13 @@ class PublicHeader extends Component {
 
     state = {
         navState: false, //导航栏是否显示
+        searchflag:false,
+        blockStatus:false
     };
 
     // 切换左侧导航栏状态
     toggleNav = () => {
-        this.setState({navState: !this.state.navState});
+        this.setState({navState: !this.state.navState, blockStatus:false});
     }
     // css动画组件设置为目标组件
     FirstChild = props => {
@@ -45,6 +48,36 @@ class PublicHeader extends Component {
     handleClickSelect(e){
         e.stopPropagation();
     }
+    handleClickSearch(type, e){
+        e.stopPropagation();
+        if(!type){
+          this.setState({searchflag:true});
+        }
+    }
+    handleClickCan(e){
+        e.stopPropagation();
+        this.setState({searchflag:false,blockStatus:false});
+    }
+
+    getSearchRes = async (obj)=>{
+       let result = await API.search(obj);
+       if(!result.data || result.data.length < 1){
+         this.themeList = [];
+       }else{
+          this.themeList = result.data;
+       }
+       this.setState({blockStatus:true});
+       
+    }
+    handleKeyup(e){
+      if(e.keyCode === 13){//敲回车了
+         if(!e.target.value || e.target.value.length < 1){
+           return;
+         }
+         this.setState({blockStatus:false});
+         this.getSearchRes({source:e.target.value});
+      }
+    }
     render() {
         let tar = this.props.loginStatus ? '/loginout' : '/login';
         let rat = this.props.loginStatus ? '登出' : '登陆';
@@ -53,6 +86,18 @@ class PublicHeader extends Component {
         let newtheme = null;
         let typeselect = null;
         let plselect = null;
+        let searchdiv = null;
+
+        if(this.state.searchflag){
+           searchdiv = <div className="nav-link iconfont searchh" onClick={this.handleClickSearch.bind(this, true)}>
+              <input onKeyUp={this.handleKeyup.bind(this)} className="searchinp" placeholder="输入标题或内容" />
+              <a onClick={this.handleClickCan.bind(this)} className="searchbut">取消</a> 
+           </div>
+        }else{
+               searchdiv = <div onClick={this.handleClickSearch.bind(this, false)} className="nav-link iconfont searchh">
+                  搜索
+           </div>
+        }
 
         if (this.props.typeobj && this.props.typeobj.typeList && this.props.typeobj.typeList.length > 0) {
             if (!this.props.typeobj.curtype || this.props.typeobj.curtype == '') {
@@ -98,7 +143,7 @@ class PublicHeader extends Component {
                             <aside key='nav-slide' className="nav-slide-list" onClick={this.toggleNav}>
                                 <NavLink to="/" exact className="nav-link iconfont homee">首页</NavLink>
                                 {tt}
-                                <NavLink to="/search" exact className="nav-link iconfont searchh">搜索</NavLink>
+                                {searchdiv}
                                 {newtheme}
                                 {typeselect}
                             </aside>
@@ -106,7 +151,9 @@ class PublicHeader extends Component {
 
                     }
                 </ReactCSSTransitionGroup>
-
+                {
+                   this.state.blockStatus && <Block loginStatus={this.props.loginStatus} themeList={this.themeList} />
+                }
             </header>
         );
     }
