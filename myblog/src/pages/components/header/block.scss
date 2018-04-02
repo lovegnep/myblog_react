@@ -4,6 +4,9 @@
   top:60%;
   position: fixed;
   border: 2px solid;
+  overflow: auto;
+    background-color: #f5f5f5;
+    border-radius: 9px;
   .searchres{
     text-align: center;
     font-size:30px;
@@ -13,7 +16,11 @@
     padding-top:30px;
   }
   .common-themelist{
-    font-size:30px;
-    padding:10px; 
+    font-size: 30px;
+    margin: 10px;
+    margin-left: 23px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    border-left: 4px solid #2196F3;
   }
 }
