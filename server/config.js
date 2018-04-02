@@ -34,7 +34,7 @@ var config = {
     },
     file_limit: '10MB',
     // 话题列表显示的话题数量
-    list_topic_count: 15,
+    list_topic_count: 10,
     site_static_host: '', // 静态文件存储域名
 
 

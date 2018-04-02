@@ -27,6 +27,7 @@ class Home extends Component {
             curType: '',
             loginStatus: tmp
         };
+        this.loadflag = false;//动态加载标志
     }
 
     handleLoginOut() {
@@ -48,6 +49,24 @@ class Home extends Component {
         let result = await API.getThemeList(obj);
         this.setState({themeList: result.data});
     }
+    mergeThemeList = async(obj)=>{
+      let result = await API.getThemeList(obj);
+      if(result.data.length < 1){
+        this.loadflag = false;
+        return;
+      }
+      let newthemelist = [];
+      this.state.themeList.forEach(function(theme){
+        let tmpobj = {...theme};
+        newthemelist.push(tmpobj);
+      });
+      result.data.forEach(function(theme){
+        let tmpobj = {...theme};
+        newthemelist.push(tmpobj);
+      });        
+      this.setState({themeList:newthemelist});
+      this.loadflag = false;
+    }
     getTypes = async () => {
         let result = await API.getTypeList();
         this.setState({type: result.data});
@@ -65,7 +84,11 @@ class Home extends Component {
         //当前文档高度   小于或等于   滚动条所在位置高度  则是页面底部
         if(($(document).height()) <= totalheight+2) {
             //页面到达底部
-            console.log('到达');
+            if(this.loadflag){
+               return;
+            }
+            this.loadflag = true;
+            this.mergeThemeList({tab:this.state.curtype, skip:this.state.themeList.length});
         }
     }
     componentDidMount() {

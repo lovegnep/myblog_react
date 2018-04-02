@@ -57,9 +57,9 @@ router.post('/getTypeList', function(req, res, next){//请求主题类别
 
 router.post('/getThemeList', function(req, res, next){
     let tab = req.body.tab || '全部';
-    let page = req.body.page || 1;
+    let skip = req.body.skip || 0;
     let limit = config.list_topic_count;
-    let options = { skip: (page - 1) * limit, limit: limit, sort: '-update_at'};
+    let options = { skip: skip, limit: limit, sort: '-update_at'};
     let query = {
         deleted: false
     };
