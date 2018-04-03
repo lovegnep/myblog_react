@@ -34,6 +34,8 @@ const ALLOW_ORIGIN = [ // 域名白名单
     'http://localhost:3000',
     'http://39.108.56.116:3001',
     'http://www.5min8.com:3001',
+    'http://www.5min8.com',
+    'http://39.108.56.116:3005',
 ];
 
 app.use(bodyParser.json());
