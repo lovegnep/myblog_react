@@ -2,8 +2,8 @@
 var path = require('path');
 
 var config = {
-    la:'wumin',
-    lb:'0316',
+    la:'uuuuuuuuuu',
+    lb:'kkkkkkkkkkkkk',
     name: 'blog', 
 
 
