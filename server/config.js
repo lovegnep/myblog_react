@@ -1,28 +1,17 @@
-/**
- * Created by Administrator on 2017/9/23.
- */
 
 var path = require('path');
 
 var config = {
     la:'wumin',
     lb:'0316',
-    name: 'blog', // 社区名字
-    description: '可知天涯有几可 乐盼西窗剪烛乐', // 社区的描述
-    keywords: '鸡鸣晨枝莺成排 翅收哀鸣怨入骨',
+    name: 'blog', 
 
-    // 添加到 html head 中的信息
-    site_headers: [
-        '<meta name="author" content="EDP@TAOBAO" />'
-    ],
-    site_logo: '/public/images/cnodejs_light.svg', // default is `name`
-    site_icon: '/public/images/cnode_icon_32.png', // 默认没有 favicon, 这里填写网址
 
     author:'好想吃肉',
     // mongodb 配置
     db: 'mongodb://127.0.0.1/myblog',
 
-    session_secret: 'hehehaha', // 务必修改
+    session_secret: 'hehehaha', // 
     auth_cookie_name: 'gnep',
     auth_cookie_val:'peng',
 
