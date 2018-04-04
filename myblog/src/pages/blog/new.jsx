@@ -100,7 +100,7 @@ class NewTheme extends Component {
         let self = this;
         return (
             <div className="newtheme-container">
-                <PublicHeader title='文章' loginStatus={true}/>
+                <PublicHeader title='新建文章' loginStatus={true}/>
                 <div className="newform">
                     <ul>
                         <li><span>标题</span>
