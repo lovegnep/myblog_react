@@ -19,6 +19,9 @@
     }
     .edit_draft{
       padding-top:30px;
+      padding:10px;
+      @include font(30px);
+      border-bottom:1px solid #e0e0e0;
     }
   }
 }

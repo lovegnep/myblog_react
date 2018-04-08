@@ -81,7 +81,9 @@
     background-image: linear-gradient(to right, #e9e9f1, #babad1);
   }
   .edit_draft{
-    font-size:20px;
+      padding:10px;
+      @include font(30px);
+      border-bottom:1px solid #e0e0e0;
   }
   .answer{
     .pos{
