@@ -44,7 +44,7 @@ class Addtype extends Component {
                      <div className="entity">
                 <span className="typename">类别</span>
                 <input type="text"  onChange={this.handleInput.bind(self)} />
-                <p><button type="button" onClick={this.handleClickButton.bind(self,1)}>取消</button>
+                <p className="funct"><button type="button" onClick={this.handleClickButton.bind(self,1)}>取消</button>
                 <button type="button" onClick={this.handleClickButton.bind(self,2)}>新建</button></p>
               </div>
                 </div>

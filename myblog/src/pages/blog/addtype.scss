@@ -11,20 +11,31 @@
   }
   .entity{
     position: fixed;
-    top: 50%;
-    left: 20%;
+    top: 30%;
+    left: 10%;
     z-index: 1001;
-    height: 16%;
-    width: 50%;
-    padding: 10px;
+    height: 40%;
+    width: 80%;
+    padding: 50px;
     border-radius: 10px;
     background-color: #ffffff;
+    .funct{
+      text-align: center;
+      button{
+        width:70px;
+        height:70px;
+      }
+      button:first-child{
+        margin-right:60px;
+      }
+    }
     .typename{
-      font-size:30px;
+      padding-right: 20px;
+      font-size: 40px;
     }  
     input{
       width:50%;
-      height:40px;
+      height:60px;
       border: solid;
     }
   }
