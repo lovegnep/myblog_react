@@ -1,0 +1,26 @@
+@import "../style/mixin.scss";
+@import "../assets/iconblog/icon.css";
+.newcontain{
+  padding-top:80px;
+  .formtt span{
+    font-size:50px;
+  }
+  .formtt input{
+    font-size: 40px;
+    margin-left: 20px;
+    width: 60%;
+  }
+  .formtt select{
+    font-size: 30px;
+    margin-left: 20px;
+    height: 52px;
+    margin-top: 12px;
+    width: 50%;
+  }
+  .edit_draft{
+    padding-top:30px;
+    padding:10px;
+    @include font(30px);
+    border-bottom:1px solid #e0e0e0;
+  }
+}
