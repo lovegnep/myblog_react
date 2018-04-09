@@ -250,7 +250,7 @@ class Theme extends Component {
                                     {
                                         item.lou&&<span className="atlou">{"@"+item.lou+'楼'}</span>
                                     }
-                                    <p className="content">{item.content}</p>
+                                    <ReactMarkdown source={item.content}/>
                                     <div className="interaction">
                                         <a><span className={"iconfont "+ (uptmp === 0 ? "noup" : "hasup")} onClick={self.onoptreply.bind(self,1,item._id)}>{item.ups > 0 ? item.ups : ''}</span></a>
                                         <a><span className={"iconfont " + (downtmp === 0 ? "nodown" : 'hasdown')} onClick={self.onoptreply.bind(self,2,item._id)}>{item.downs > 0 ? item.downs : ''}</span></a>
