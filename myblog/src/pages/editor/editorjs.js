@@ -783,6 +783,7 @@ export default function editor(global) {
     function updateSelectionCursor(cm) {
       var display = cm.display, pos = cursorCoords(cm, cm.doc.sel.head, "div");
       display.cursor.style.left = pos.left + "px";
+      console.log("cursor:left:",display.cursor.style.left);
       display.cursor.style.top = pos.top + "px";
       display.cursor.style.height = Math.max(0, pos.bottom - pos.top) * cm.options.cursorHeight + "px";
       display.cursor.style.display = "";

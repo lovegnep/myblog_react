@@ -37,6 +37,7 @@ const ALLOW_ORIGIN = [ // 域名白名单
     'http://www.5min8.com',
     'http://39.108.56.116:3005',
     'http://39.108.56.116:4001',
+    'http://127.0.0.1:65190',
 ];
 
 app.use(bodyParser.json());
@@ -66,6 +67,7 @@ app.use('/',function (req,res,next) {
         // 你的业务代码逻辑代码 ...
         // ...
     }else{
+	console.error("error origin:",reqOrigin);
         return res.send({ code: -2, msg: '非法请求' });
     }
 
