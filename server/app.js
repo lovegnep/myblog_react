@@ -56,7 +56,7 @@ app.use(busboy({
 }));
 app.use('/',function (req,res,next) {
     let reqOrigin = req.headers.origin; // request响应头的origin属性
-
+    console.log('req come...');
     // 判断请求是否在域名白名单内
     if(isOriginAllowed(reqOrigin, ALLOW_ORIGIN)) {
         // 设置CORS为请求的Origin值

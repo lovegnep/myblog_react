@@ -1,8 +1,11 @@
 import Server from './server';
+
+const apihead = 'http://39.108.56.116:30000/';
+
 class API extends Server {
     async getThemeList(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/getThemeList', params);
+            let result = await this.axios('post', apihead+'getThemeList', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -10,7 +13,7 @@ class API extends Server {
                     tip: '获得主题列表失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/getThemeList',
+                    url: apihead+'getThemeList',
                 }
                 throw err;
             }
@@ -21,7 +24,7 @@ class API extends Server {
 
     async getTypeList(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/getTypeList', params);
+            let result = await this.axios('post', apihead+'getTypeList', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -29,7 +32,7 @@ class API extends Server {
                     tip: '获得分类列表失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/getTypeList',
+                    url: apihead+'getTypeList',
                 }
                 throw err;
             }
@@ -41,7 +44,7 @@ class API extends Server {
 
     async getViewCount(params = {}) {
         try {
-            let result = await this.axios('get', 'http://39.108.56.116:3000/count', params);
+            let result = await this.axios('get', apihead+'count', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -49,7 +52,7 @@ class API extends Server {
                     tip: '获取访问量失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/count',
+                    url: apihead+'count',
                 }
                 throw err;
             }
@@ -61,7 +64,7 @@ class API extends Server {
 
     async getThemeCount(params = {}) {
         try {
-            let result = await this.axios('get', 'http://39.108.56.116:3000/themeCount', params);
+            let result = await this.axios('get', apihead+'themeCount', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -69,7 +72,7 @@ class API extends Server {
                     tip: '获取主题数量失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/themeCount',
+                    url: apihead+'themeCount',
                 }
                 throw err;
             }
@@ -81,7 +84,7 @@ class API extends Server {
 
     async getViewMost(params = {}) {
         try {
-            let result = await this.axios('get', 'http://39.108.56.116:3000/viewMost', params);
+            let result = await this.axios('get', apihead+'viewMost', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -89,7 +92,7 @@ class API extends Server {
                     tip: '获取查看最多的主题列表失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/viewMost',
+                    url: apihead+'viewMost',
                 }
                 throw err;
             }
@@ -101,7 +104,7 @@ class API extends Server {
 
     async getCommentMost(params = {}) {
         try {
-            let result = await this.axios('get', 'http://39.108.56.116:3000/commentMost', params);
+            let result = await this.axios('get', apihead+'commentMost', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -109,7 +112,7 @@ class API extends Server {
                     tip: '获取评论最多的主题列表失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/commentMost',
+                    url: apihead+'commentMost',
                 }
                 throw err;
             }
@@ -121,7 +124,7 @@ class API extends Server {
 
     async getIconSrc(params = {}) {
         try {
-            let result = await this.axios('get', 'http://39.108.56.116:3000/iconSrc', params);
+            let result = await this.axios('get', apihead+'iconSrc', params);
             if (result && result.status === 1) {
                 console.log('getIconSrc:', result);
                 return result;
@@ -130,7 +133,7 @@ class API extends Server {
                     tip: '获取头像Src失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/iconSrc',
+                    url: apihead+'iconSrc',
                 }
                 throw err;
             }
@@ -142,7 +145,7 @@ class API extends Server {
 
     async getValidImg(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/loginImg', params);
+            let result = await this.axios('post', apihead+'loginImg', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -150,7 +153,7 @@ class API extends Server {
                     tip: '获取验证码Src失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/loginImg',
+                    url: apihead+'loginImg',
                 }
                 throw err;
             }
@@ -163,7 +166,7 @@ class API extends Server {
     async login(params = {}) {
         try {
             console.log('参数：', params);
-            let result = await this.axios('post', 'http://39.108.56.116:3000/login', params);
+            let result = await this.axios('post', apihead+'login', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -171,7 +174,7 @@ class API extends Server {
                     tip: '登陆失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/login',
+                    url: apihead+'login',
                 }
                 throw err;
             }
@@ -184,7 +187,7 @@ class API extends Server {
     async loginout(params = {}) {
         try {
             console.log('参数：', params);
-            let result = await this.axios('get', 'http://39.108.56.116:3000/loginout', params);
+            let result = await this.axios('get', apihead+'loginout', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -192,7 +195,7 @@ class API extends Server {
                     tip: '登出失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/loginout',
+                    url: apihead+'loginout',
                 }
                 throw err;
             }
@@ -205,7 +208,7 @@ class API extends Server {
     async getLoginStatus(params = {}) {
         try {
             console.log('参数：', params);
-            let result = await this.axios('get', 'http://39.108.56.116:3000/loginstatus', params);
+            let result = await this.axios('get', apihead+'loginstatus', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -213,7 +216,7 @@ class API extends Server {
                     tip: '获取登陆状态失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/loginstatus',
+                    url: apihead+'loginstatus',
                 }
                 throw err;
             }
@@ -225,7 +228,7 @@ class API extends Server {
 
     async getTheme(params = {}) {
         try {
-            let result = await this.axios('get', 'http://39.108.56.116:3000/theme/' + params._id, params);
+            let result = await this.axios('get', apihead+'theme/' + params._id, params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -233,7 +236,7 @@ class API extends Server {
                     tip: '抓取theme失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/theme/' + params._id,
+                    url: apihead+'theme/' + params._id,
                 }
                 throw err;
             }
@@ -244,7 +247,7 @@ class API extends Server {
     }
     async addType(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/addnewtype', params);
+            let result = await this.axios('post', apihead+'addnewtype', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -252,7 +255,7 @@ class API extends Server {
                     tip: '新增分类失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/theme/addnewtype',
+                    url: apihead+'theme/addnewtype',
                 }
                 throw err;
             }
@@ -263,7 +266,7 @@ class API extends Server {
     }
     async addNewTheme(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/newtheme', params);
+            let result = await this.axios('post', apihead+'newtheme', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -271,7 +274,7 @@ class API extends Server {
                     tip: '新建文章失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/theme/newtheme',
+                    url: apihead+'theme/newtheme',
                 }
                 throw err;
             }
@@ -282,7 +285,7 @@ class API extends Server {
     }
     async deleTheme(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/delete', params);
+            let result = await this.axios('post', apihead+'theme/'+params._id+'/delete', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -290,7 +293,7 @@ class API extends Server {
                     tip: '删除文章失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/delete',
+                    url: apihead+'theme/'+params._id+'/delete',
                 }
                 throw err;
             }
@@ -301,7 +304,7 @@ class API extends Server {
     }
     async editTheme(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/edit', params);
+            let result = await this.axios('post', apihead+'theme/'+params._id+'/edit', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -309,7 +312,7 @@ class API extends Server {
                     tip: '修改文章失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/edit',
+                    url: apihead+'theme/'+params._id+'/edit',
                 }
                 throw err;
             }
@@ -320,7 +323,7 @@ class API extends Server {
     }
     async secretTheme(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/addsecret', params);
+            let result = await this.axios('post', apihead+'theme/'+params._id+'/addsecret', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -328,7 +331,7 @@ class API extends Server {
                     tip: '隐藏文章失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/addsecret',
+                    url: apihead+'theme/'+params._id+'/addsecret',
                 }
                 throw err;
             }
@@ -339,7 +342,7 @@ class API extends Server {
     }
     async unsecretTheme(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/delesecret', params);
+            let result = await this.axios('post', apihead+'theme/'+params._id+'/delesecret', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -347,7 +350,7 @@ class API extends Server {
                     tip: '取消隐藏文章失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/delesecret',
+                    url: apihead+'theme/'+params._id+'/delesecret',
                 }
                 throw err;
             }
@@ -358,7 +361,7 @@ class API extends Server {
     }
     async addReply(params = {}) {
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/theme/'+params._id+'/reply', params);
+            let result = await this.axios('post', apihead+'theme/'+params._id+'/reply', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -366,7 +369,7 @@ class API extends Server {
                     tip: '评论失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/theme/'+params._id+'/reply',
+                    url: apihead+'theme/'+params._id+'/reply',
                 }
                 throw err;
             }
@@ -378,7 +381,7 @@ class API extends Server {
 
     async optReply(params = {}) {//对评论赞或者踩
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/reply/'+params._id+'/replyopt', params);
+            let result = await this.axios('post', apihead+'reply/'+params._id+'/replyopt', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -386,7 +389,7 @@ class API extends Server {
                     tip: '操作失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/reply/'+params._id+'/replyopt',
+                    url: apihead+'reply/'+params._id+'/replyopt',
                 }
                 throw err;
             }
@@ -398,7 +401,7 @@ class API extends Server {
 
     async search(params = {}) {//搜索
         try {
-            let result = await this.axios('post', 'http://39.108.56.116:3000/search', params);
+            let result = await this.axios('post', apihead+'search', params);
             if (result && result.status === 1) {
                 return result;
             } else {
@@ -406,7 +409,7 @@ class API extends Server {
                     tip: '搜索失败',
                     response: result,
                     data: params,
-                    url: 'http://39.108.56.116:3000/search',
+                    url: apihead+'search',
                 }
                 throw err;
             }
